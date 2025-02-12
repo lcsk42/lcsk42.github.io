@@ -22,3 +22,19 @@ url = "https://x.com/lcsk42"
 
 [social.params]
 icon = "brand-twitter"
+
+[[social]]
+identifier = "mail"
+name = "Mail"
+url = "mailto:lcsk42@gmail.com"
+
+[social.params]
+icon = "brand-mail"
+
+[[social]]
+identifier = "rss"
+name = "RSS"
+url = "/index.xml"
+
+[social.params]
+icon = "brand-rss"
