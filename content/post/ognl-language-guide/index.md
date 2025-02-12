@@ -1,5 +1,6 @@
 ---
 title: 'OGNL Language Guide'
+slug: ognl-language-guide
 description: 对官网内容的简单翻译
 date: 2024-03-23T09:39:46+08:00
 categories:

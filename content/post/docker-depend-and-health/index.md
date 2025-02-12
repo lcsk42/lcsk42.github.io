@@ -1,5 +1,6 @@
 ---
 title: 'Docker Compose 服务依赖和健康检查'
+slug: docker-depend-and-health
 description: 介绍 Docker Compose 服务依赖和健康检查相关知识
 date: 2024-06-01T10:06:34+08:00
 categories:

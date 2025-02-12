@@ -1,5 +1,6 @@
 ---
 title: 'Java Microbenchmark Harness'
+slug: java-microbenchmark-harness
 description: 基准测试
 date: 2023-12-10T10:20:18+08:00
 categories:

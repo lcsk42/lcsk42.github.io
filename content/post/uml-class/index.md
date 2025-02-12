@@ -1,5 +1,6 @@
 ---
 title: 'UML Class'
+slug: uml-class
 description: UML 类图介绍
 date: 2024-03-20T10:17:02+08:00
 categories:

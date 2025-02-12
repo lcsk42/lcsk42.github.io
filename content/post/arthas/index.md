@@ -1,5 +1,6 @@
 ---
 title: 'Arthas'
+slug: arthas
 description: 整理 Arthas 的使用方法
 date: 2024-03-22T09:39:46+08:00
 categories:
