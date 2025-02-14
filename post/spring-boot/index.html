@@ -1,0 +1,516 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="介绍 Spring Boot 相关知识"><title>Spring Boot</title>
+<link rel=canonical href=https://www.lcsk42.com/post/spring-boot/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Spring Boot"><meta property='og:description' content="介绍 Spring Boot 相关知识"><meta property='og:url' content='https://www.lcsk42.com/post/spring-boot/'><meta property='og:site_name' content="Lucas's Article"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Java'><meta property='article:tag' content='Spring Boot'><meta property='article:published_time' content='2025-02-14T13:50:27+08:00'><meta property='article:modified_time' content='2025-02-14T13:50:27+08:00'><meta name=twitter:title content="Spring Boot"><meta name=twitter:description content="介绍 Spring Boot 相关知识"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_b46f367e8ae3a2b0.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🫠</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lucas's Article</a></h1><h2 class=site-description>Life is short; meeting you is the best fortune.</h2></div></header><ol class=menu-social><li><a href=https://github.com/lcsk42 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=mailto:lcsk42@gmail.com target=_blank title=Mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li><li><a href=https://x.com/lcsk42 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#spring-boot-初始化类的先后顺序>Spring Boot 初始化类的先后顺序</a><ol><li><a href=#springapplication>SpringApplication</a></li><li><a href=#initializingbean>InitializingBean</a></li><li><a href=#postconstruct>@PostConstruct</a></li><li><a href=#applicationrunner>ApplicationRunner</a></li><li><a href=#commandlinerunner>CommandLineRunner</a></li><li><a href=#输出>输出</a></li></ol></li><li><a href=#spring-boot-自动装配>Spring Boot 自动装配</a><ol><li><a href=#什么是-spring-boot-的自动装配>什么是 Spring Boot 的自动装配</a></li><li><a href=#如何实现-spring-boot-的自动装配>如何实现 Spring Boot 的自动装配</a></li><li><a href=#如何实现一个-spring-boot-starter>如何实现一个 Spring Boot Starter</a><ol><li><a href=#如何命名>如何命名</a></li><li><a href=#创建项目>创建项目</a></li><li><a href=#pom-依赖配置>POM 依赖配置</a></li><li><a href=#相关类>相关类</a></li><li><a href=#配置文件>配置文件</a></li></ol></li></ol></li><li><a href=#事务>事务</a><ol><li><a href=#事务分类>事务分类</a><ol><li><a href=#编程式事务>编程式事务</a></li><li><a href=#生命式事务>生命式事务</a></li></ol></li><li><a href=#事务的传播行为>事务的传播行为</a></li><li><a href=#事务只读>事务只读</a></li><li><a href=#transactional-事务注解原理>@Transactional 事务注解原理</a><ol><li><a href=#开启事务>开启事务</a></li><li><a href=#执行业务逻辑>执行业务逻辑</a></li><li><a href=#提交或回滚事务>提交或回滚事务</a></li></ol></li><li><a href=#spring-aop-自调用问题>Spring AOP 自调用问题</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/dev/>Dev</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/spring-boot/>Spring Boot</a></h2><h3 class=article-subtitle>介绍 Spring Boot 相关知识</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Feb 14, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>7 minute read</time></div></footer></div></header><section class=article-content><p>分模块介绍 Spring Boot 相关知识。</p><h2 id=spring-boot-初始化类的先后顺序>Spring Boot 初始化类的先后顺序</h2><ol><li><code>SpringApplication</code></li><li><code>InitializingBean</code></li><li><code>@PostConstruct</code></li><li><code>ApplicationRunner</code></li><li><code>CommandLineRunner</code></li></ol><h3 id=springapplication>SpringApplication</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.boot.SpringApplication</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.boot.autoconfigure.SpringBootApplication</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@SpringBootApplication</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>BeanDemoApplication</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Before:: SpringApplication#run()&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>SpringApplication</span><span class=p>.</span><span class=na>run</span><span class=p>(</span><span class=n>BeanDemoApplication</span><span class=p>.</span><span class=na>class</span><span class=p>,</span><span class=w> </span><span class=n>args</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;After:: SpringApplication#run()&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=initializingbean>InitializingBean</h3><p><code>InitializingBean</code> 接口为 bean 提供了属性初始化后的处理方法，只拥有一个 <code>afterPropertiesSet</code> 方法，凡是继承该接口的类，在 bean 的属性初始化后都会执行该方法。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nn>org.springframework.beans.factory</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>interface</span> <span class=nc>InitializingBean</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kt>void</span><span class=w> </span><span class=nf>afterPropertiesSet</span><span class=p>()</span><span class=w> </span><span class=kd>throws</span><span class=w> </span><span class=n>Exception</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.beans.factory.InitializingBean</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Component</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Component</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>CustomInitializingBean</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>InitializingBean</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>afterPropertiesSet</span><span class=p>()</span><span class=w> </span><span class=kd>throws</span><span class=w> </span><span class=n>Exception</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;InitializingBean#afterPropertiesSet()&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=postconstruct>@PostConstruct</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Component</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>javax.annotation.PostConstruct</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Component</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>CustomPostConstruct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@PostConstruct</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>method</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;@PostConstruct -&gt; method()&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=applicationrunner>ApplicationRunner</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.boot.ApplicationArguments</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.boot.ApplicationRunner</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Component</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Component</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>CustomApplicationRunner</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>ApplicationRunner</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>run</span><span class=p>(</span><span class=n>ApplicationArguments</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=kd>throws</span><span class=w> </span><span class=n>Exception</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;ApplicationRunner#run(ApplicationArguments args)&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=commandlinerunner>CommandLineRunner</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.boot.CommandLineRunner</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Component</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Component</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>CustomCommandLineRunner</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>CommandLineRunner</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>run</span><span class=p>(</span><span class=n>String</span><span class=p>...</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=kd>throws</span><span class=w> </span><span class=n>Exception</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;CommandLineRunner#run(String... args)&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=输出>输出</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Before:: SpringApplication#run()
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  .   ____          _            __ _ _
+</span></span><span class=line><span class=cl> /\\ / ___&#39;_ __ _ _(_)_ __  __ _ \ \ \ \
+</span></span><span class=line><span class=cl>( ( )\___ | &#39;_ | &#39;_| | &#39;_ \/ _` | \ \ \ \
+</span></span><span class=line><span class=cl> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+</span></span><span class=line><span class=cl>  &#39;  |____| .__|_| |_|_| |_\__, | / / / /
+</span></span><span class=line><span class=cl> =========|_|==============|___/=/_/_/_/
+</span></span><span class=line><span class=cl> :: Spring Boot ::                (v2.7.6)
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>2025-02-14 16:02:17.808  INFO 76746 --- [           main] c.example.beandemo.BeanDemoApplication   : Starting BeanDemoApplication using Java 1.8.0_442 on MacBook-Pro.local with PID 76746
+</span></span><span class=line><span class=cl>2025-02-14 16:02:17.810  INFO 76746 --- [           main] c.example.beandemo.BeanDemoApplication   : No active profile set, falling back to 1 default profile: &#34;default&#34;
+</span></span><span class=line><span class=cl>InitializingBean#afterPropertiesSet()
+</span></span><span class=line><span class=cl>@PostConstruct -&gt; method()
+</span></span><span class=line><span class=cl>2025-02-14 16:02:18.008  INFO 76746 --- [           main] c.example.beandemo.BeanDemoApplication   : Started BeanDemoApplication in 0.334 seconds (JVM running for 0.538)
+</span></span><span class=line><span class=cl>ApplicationRunner#run(ApplicationArguments args)
+</span></span><span class=line><span class=cl>CommandLineRunner#run(String... args)
+</span></span><span class=line><span class=cl>After:: SpringApplication#run()
+</span></span></code></pre></td></tr></table></div></div><h2 id=spring-boot-自动装配>Spring Boot 自动装配</h2><h3 id=什么是-spring-boot-的自动装配>什么是 Spring Boot 的自动装配</h3><p><strong>SPI</strong>（Service Provider Interface） 是一种 Java 标准机制，用于实现服务的动态发现和加载。Spring Boot 利用 SPI 机制来扩展框架功能，允许开发者通过简单的配置实现自定义逻辑。</p><p>SpringBoot 在启动过程中会扫描外部引入的 jar 包中的 <code>META-INF/spring.factories</code> （自 Spring Boot 3.0 开始，位置修改为 <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>）文件，根据文件配置的类型信息加载到 Spring 容器中，并执行类中定义的各种操作。这样外部的 jar 来说，只要按照 Spring Boot 定义的标准，就能自动将自己的功能加载进 Spring Boot。</p><h3 id=如何实现-spring-boot-的自动装配>如何实现 Spring Boot 的自动装配</h3><ol><li>核心注解 <code>@SpringBootApplication</code> 包含了三个注解:<ol><li><code>@EnableAutoConfiguration</code>：启用 SpringBoot 的自动配置机制</li><li><code>@Configuration</code>：允许在上下文中注册额外的 bean 或导入其他配置类</li><li><code>@ComponentScan</code>：扫描被 <code>@Component</code> (<code>@Service</code>,<code>@Controller</code> 等)注解的 bean，注解默认会扫描启动类所在的包下所有的类 ，可以自定义不扫描某些 bean。</li></ol></li><li><code>@EnableAutoConfiguration</code> 实现自动装配的核心逻辑<ol><li><code>AutoConfigurationImportSelector</code> 类实现了 <code>ImportSelector</code> 接口，也就实现了这个接口中的 <code>selectImports</code> 方法, 该方法获取到所有符合条件的类的全限定类名，这些类就是需要加载到 IoC 容器中的类。</li><li>方法中的 <code>getAutoConfigurationEntry()</code> 主要负责加载自动配置类<ol><li>判断自动装配开关是否打开（<code>spring.boot.enableautoconfiguration</code> 配置）</li><li>用于获取 <code>@EnableAutoConfiguration</code> 注解中的 <code>exclude</code> 和 <code>excludeName</code></li><li>获取需要自动装配的所有配置类，读取所有 Spring Boot Starter 下的 <code>META-INF/spring.factories</code></li><li>筛选所有满足 <code>@ConditionalOnXXX</code> 注解的类</li></ol></li></ol></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>AutoConfigurationImportSelector</span><span class=w> </span><span class=kd>implements</span><span class=w> </span><span class=n>DeferredImportSelector</span><span class=p>,</span><span class=w> </span><span class=n>BeanClassLoaderAware</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>ResourceLoaderAware</span><span class=p>,</span><span class=w> </span><span class=n>BeanFactoryAware</span><span class=p>,</span><span class=w> </span><span class=n>EnvironmentAware</span><span class=p>,</span><span class=w> </span><span class=n>Ordered</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c1>// ...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=nf>selectImports</span><span class=p>(</span><span class=n>AnnotationMetadata</span><span class=w> </span><span class=n>annotationMetadata</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 1. 判断判断自动装配开关是否打开</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>isEnabled</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=k>return</span><span class=w> </span><span class=n>NO_IMPORTS</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 2. 获取所有需要装配的 bean</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>AutoConfigurationEntry</span><span class=w> </span><span class=n>autoConfigurationEntry</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getAutoConfigurationEntry</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>StringUtils</span><span class=p>.</span><span class=na>toStringArray</span><span class=p>(</span><span class=n>autoConfigurationEntry</span><span class=p>.</span><span class=na>getConfigurations</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c1>// ...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=kd>protected</span><span class=w> </span><span class=n>AutoConfigurationEntry</span><span class=w> </span><span class=nf>getAutoConfigurationEntry</span><span class=p>(</span><span class=n>AnnotationMetadata</span><span class=w> </span><span class=n>annotationMetadata</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 1. 判断自动装配开关是否打开</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=o>!</span><span class=n>isEnabled</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>))</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=k>return</span><span class=w> </span><span class=n>EMPTY_ENTRY</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 2. 用于获取 EnableAutoConfiguration 注解中的 exclude 和 excludeName</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>AnnotationAttributes</span><span class=w> </span><span class=n>attributes</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getAttributes</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 3. 获取需要自动装配的所有配置类，读取 META-INF/spring.factories</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>List</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>configurations</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getCandidateConfigurations</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>,</span><span class=w> </span><span class=n>attributes</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=c1>// 4. 筛选 是否满足 @ConditionalOnXXX</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>configurations</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>removeDuplicates</span><span class=p>(</span><span class=n>configurations</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Set</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>exclusions</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getExclusions</span><span class=p>(</span><span class=n>annotationMetadata</span><span class=p>,</span><span class=w> </span><span class=n>attributes</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>checkExcludedClasses</span><span class=p>(</span><span class=n>configurations</span><span class=p>,</span><span class=w> </span><span class=n>exclusions</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>configurations</span><span class=p>.</span><span class=na>removeAll</span><span class=p>(</span><span class=n>exclusions</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>configurations</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>getConfigurationClassFilter</span><span class=p>().</span><span class=na>filter</span><span class=p>(</span><span class=n>configurations</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>fireAutoConfigurationImportEvents</span><span class=p>(</span><span class=n>configurations</span><span class=p>,</span><span class=w> </span><span class=n>exclusions</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>AutoConfigurationEntry</span><span class=p>(</span><span class=n>configurations</span><span class=p>,</span><span class=w> </span><span class=n>exclusions</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=c1>// ...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>Spring Boot 提供的条件注解：</p><ul><li><code>@ConditionalOnBean</code>：当容器里有指定 Bean 的条件下@ConditionalOnMissingBean：当容器里没有指定 Bean 的情况下</li><li><code>@ConditionalOnSingleCandidate</code>：当指定 Bean 在容器中只有一个，或者虽然有多个但是指定首选 Bean</li><li><code>@ConditionalOnClass</code>：当类路径下有指定类的条件下</li><li><code>@ConditionalOnMissingClass</code>：当类路径下没有指定类的条件下</li><li><code>@ConditionalOnProperty</code>：指定的属性是否有指定的值</li><li><code>@ConditionalOnResource</code>：类路径是否有指定的值</li><li><code>@ConditionalOnExpression</code>：基于 SpEL 表达式作为判断条件</li><li><code>@ConditionalOnJava</code>：基于 Java 版本作为判断条件</li><li><code>@ConditionalOnJndi</code>：在 JNDI 存在的条件下差在指定的位置</li><li><code>@ConditionalOnNotWebApplication</code>：当前项目不是 Web 项目的条件下</li><li><code>@ConditionalOnWebApplication</code>：当前项目是 Web 项 目的条件下</li></ul><h3 id=如何实现一个-spring-boot-starter>如何实现一个 Spring Boot Starter</h3><h4 id=如何命名>如何命名</h4><p>Spring 官方提供 Starter 通常命名为 <code>spring-boot-starter-{name}</code> 如：</p><ul><li>spring-boot-starter-web</li><li>spring-boot-starter-activemq</li><li>等等</li></ul><p>Spring 官方建议非官方提供的 Starter 命名应遵守 <code>{name}-spring-boot-starter</code> 的格式 如：</p><ul><li>mybatis-spring-boot-starter</li></ul><h4 id=创建项目>创建项目</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>└── src
+</span></span><span class=line><span class=cl>|   ├── main
+</span></span><span class=line><span class=cl>|   │   ├── java
+</span></span><span class=line><span class=cl>|   │   │   └── com
+</span></span><span class=line><span class=cl>|   │   │       └── lcsk42
+</span></span><span class=line><span class=cl>|   │   │           └── starter
+</span></span><span class=line><span class=cl>|   │   │               └── demospringbootstarter
+</span></span><span class=line><span class=cl>|   |   |                   ├── AutoConfigurationTest.java
+</span></span><span class=line><span class=cl>|   |   |                   ├── ServiceBean.java
+</span></span><span class=line><span class=cl>|   │   └── resources
+</span></span><span class=line><span class=cl>|   |       └── META-INF
+</span></span><span class=line><span class=cl>|   |           └── spring.factories
+</span></span><span class=line><span class=cl>├── pom.xml
+</span></span></code></pre></td></tr></table></div></div><h4 id=pom-依赖配置>POM 依赖配置</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=cp>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;project</span> <span class=na>xmlns=</span><span class=s>&#34;http://maven.apache.org/POM/4.0.0&#34;</span> <span class=na>xmlns:xsi=</span><span class=s>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span>
+</span></span><span class=line><span class=cl>         <span class=na>xsi:schemaLocation=</span><span class=s>&#34;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;modelVersion&gt;</span>4.0.0<span class=nt>&lt;/modelVersion&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;parent&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;groupId&gt;</span>org.springframework.boot<span class=nt>&lt;/groupId&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;artifactId&gt;</span>spring-boot-starter-parent<span class=nt>&lt;/artifactId&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;version&gt;</span>2.2.11.RELEASE<span class=nt>&lt;/version&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;relativePath/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/parent&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;groupId&gt;</span>com.lcsk42.starter<span class=nt>&lt;/groupId&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;artifactId&gt;</span>demo-spring-boot-starter<span class=nt>&lt;/artifactId&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;version&gt;</span>1.0.0<span class=nt>&lt;/version&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;properties&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;java.version&gt;</span>1.8<span class=nt>&lt;/java.version&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/properties&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;dependencies&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;dependency&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&lt;groupId&gt;</span>org.springframework.boot<span class=nt>&lt;/groupId&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&lt;artifactId&gt;</span>spring-boot-starter<span class=nt>&lt;/artifactId&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;/dependency&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/dependencies&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/project&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=相关类>相关类</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>ServiceBean</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>sayHello</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>String</span><span class=p>.</span><span class=na>format</span><span class=p>(</span><span class=s>&#34;Hello World, %s&#34;</span><span class=p>,</span><span class=w> </span><span class=n>name</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Configuration</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>AutoConfigurationTest</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Bean</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>ServiceBean</span><span class=w> </span><span class=nf>getServiceBean</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>ServiceBean</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=配置文件>配置文件</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+</span></span><span class=line><span class=cl>  com.lcsk42.starter.demospringbootstarter.AutoConfigurationTest
+</span></span></code></pre></td></tr></table></div></div><h2 id=事务>事务</h2><h3 id=事务分类>事务分类</h3><p>Spring 支持两种事务管理方式，分别是<strong>编程式事务管理</strong>和<strong>声明式事务管理</strong>。</p><h4 id=编程式事务>编程式事务</h4><p>通过 <code>TransactionTemplate</code> 或者 <code>TransactionManager(PlatformTransactionManager @2.7)</code> 手动管理事务</p><p><code>TransactionTemplate</code> 事务管理：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>lombok.RequiredArgsConstructor</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Service</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.TransactionStatus</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.support.TransactionCallbackWithoutResult</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.support.TransactionTemplate</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Service</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@RequiredArgsConstructor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>TransactionDemo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>TransactionTemplate</span><span class=w> </span><span class=n>transactionTemplate</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>testTransactionTemplate</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>transactionTemplate</span><span class=p>.</span><span class=na>execute</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=k>new</span><span class=w> </span><span class=n>TransactionCallbackWithoutResult</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=nd>@Override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=kd>protected</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>doInTransactionWithoutResult</span><span class=p>(</span><span class=n>TransactionStatus</span><span class=w> </span><span class=n>transactionStatus</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=c1>// ....  业务代码</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Exception</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=c1>// 回滚</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                            </span><span class=n>transactionStatus</span><span class=p>.</span><span class=na>setRollbackOnly</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><code>TransactionManager(PlatformTransactionManager @2.7)</code> 事务管理：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>lombok.RequiredArgsConstructor</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Service</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.PlatformTransactionManager</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.TransactionStatus</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.support.DefaultTransactionDefinition</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Service</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@RequiredArgsConstructor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>TransactionDemo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kd>final</span><span class=w> </span><span class=n>PlatformTransactionManager</span><span class=w> </span><span class=n>transactionManager</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>testTransactionManager</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=kd>final</span><span class=w> </span><span class=n>TransactionStatus</span><span class=w> </span><span class=n>status</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>transactionManager</span><span class=p>.</span><span class=na>getTransaction</span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>DefaultTransactionDefinition</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=c1>// ....  业务代码</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>transactionManager</span><span class=p>.</span><span class=na>commit</span><span class=p>(</span><span class=n>status</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Exception</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>transactionManager</span><span class=p>.</span><span class=na>rollback</span><span class=p>(</span><span class=n>status</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=生命式事务>生命式事务</h4><p><code>@Transactional</code> 的全注解方式，实际是通过 AOP 实现。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span><span class=w> </span><span class=nn>lombok.RequiredArgsConstructor</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.stereotype.Service</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.annotation.Isolation</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.annotation.Propagation</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=nn>org.springframework.transaction.annotation.Transactional</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Service</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@RequiredArgsConstructor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>TransactionDemo</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nd>@Transactional</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>propagation</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Propagation</span><span class=p>.</span><span class=na>REQUIRED</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>isolation</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>Isolation</span><span class=p>.</span><span class=na>DEFAULT</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>            </span><span class=n>rollbackFor</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>RuntimeException</span><span class=p>.</span><span class=na>class</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>testTransaction</span><span class=p>(){</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=c1>// 业务代码</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=事务的传播行为>事务的传播行为</h3><p>规定了当一个事物方法被另一个事物方法调用的时候，如何进行事务之间的传播。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Transactional</span><span class=p>(</span><span class=n>propagation</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>xxx</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>methodA</span><span class=p>(){</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nd>@Transactional</span><span class=p>(</span><span class=n>propagation</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>xxx</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>methodB</span><span class=p>(){</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>对应上方伪代码中的 xx，Spring 总共提供了七种事务传播行为：</p><div class=table-wrapper><table><thead><tr><th>事务传播行为类型</th><th>说明</th></tr></thead><tbody><tr><td><strong>REQUIRED</strong> （最常用）</td><td>当前没有事务，就新建一个事务；如果已存在一个事务，加入到这个事务中</td></tr><tr><td><em>SUPPORTS</em></td><td>支持当前事务，如果当前没有事务，就以非事务方式执行</td></tr><tr><td><strong>MANDATORY</strong></td><td>使用当前事务，如果当前没有事务，抛出异常</td></tr><tr><td><strong>REQUIRES_NEW</strong></td><td>新建事务，如果当前存在事务，把当前事务挂起</td></tr><tr><td><em>NOT_SUPPORTED</em></td><td>以非事务方式执行，如果当前存在事务，把当前事务挂起</td></tr><tr><td><em>NEVER</em></td><td>以非事务方式执行，如果当前存在事务，抛出异常</td></tr><tr><td><strong>NESTED</strong></td><td>如果当前存在事务，嵌套到当前事务中运行；如果当前不存在事务，执行类似 REQUIRED 操作</td></tr></tbody></table></div><p>针对以上的代码，给出以下几种情况(A 都是 REQUIRED)：</p><div class=table-wrapper><table><thead><tr><th>情况</th><th>异常</th><th>是否会滚</th><th>说明</th></tr></thead><tbody><tr><td>B(REQUIRED)</td><td>A B</td><td><strong>A(是)</strong> <strong>B(是)</strong></td><td>本质是一个事务</td></tr><tr><td>B(REQUIRES_NEW)</td><td>A</td><td><strong>A(是)</strong> B(否)</td><td>B 开启了独立事务</td></tr><tr><td>B(REQUIRES_NEW)</td><td>B</td><td><strong>A(是)</strong> <strong>B(是)</strong></td><td>B 的异常也会被 A 的事务管理机制检测到</td></tr><tr><td>B(NESTED)</td><td>A</td><td><strong>A(是)</strong> <strong>B(是)</strong></td><td></td></tr><tr><td>B(NESTED)</td><td>B</td><td>A(否) <strong>B(是)</strong></td><td></td></tr></tbody></table></div><h3 id=事务只读>事务只读</h3><p>对于只有读取数据查询的事务，可以指定事务类型为 readonly，即只读事务。</p><ul><li>如果只执行一条数据查询，则没有必要使用事务只读</li><li>如果要执行多条数据查询，需要保证整体的读<strong>一致性</strong>,则可以使用只读事务</li></ul><h3 id=transactional-事务注解原理>@Transactional 事务注解原理</h3><p><code>@Transactional</code> 基于 APO 的动态代理实现。</p><ul><li>如果目标类实现了接口，Spring 使用 JDK 动态代理</li><li>如果目标类没有实现接口，Spring 使用 CGLIB 代理</li></ul><p><code>TransactionInterceptor</code> 拦截被 <code>@Transactional</code> 注解标记的方法</p><h4 id=开启事务>开启事务</h4><ul><li>在方法执行前，根据 <code>@Transactional</code> 的配置，调用 <code>PlatformTransactionManager</code> 的 <code>getTransaction</code> 方法开启事务。</li></ul><h4 id=执行业务逻辑>执行业务逻辑</h4><ul><li>调用目标方法执行业务逻辑。</li></ul><h4 id=提交或回滚事务>提交或回滚事务</h4><ul><li>如果方法执行成功，调用 <code>commit</code> 提交事务</li><li>如果方法抛出异常，调用 <code>rollback</code> 回滚事务</li></ul><h3 id=spring-aop-自调用问题>Spring AOP 自调用问题</h3><p>如果一个方法增加了 <code>@Transactional</code> 注解，在别的类调用是可以生效的。</p><p>但是如果在自己的类中使用 <code>this</code> 调用，则不会生效。</p><p>这是由 AOP 的工作原理决定的，Spring AOP 使用了动态代理来实现事务的管理, 运行时为带有注解的方法生成代理对象，并在方法调用的前后实现了事务逻辑。</p><p>如果使用 IoC 注入方式调用会走代理对象，如果使用 <code>this</code> 调用，则不会走代理对象。</p><p>解决方案：</p><ol><li>拆分方法到不同类</li><li>通过 <code>AopContext.currentProxy()</code> 获取当前类的代理对象，然后通过代理对象调用方法</li><li>自注入，在自己的类中惰性注入自己</li></ol></section><footer class=article-footer><section class=article-tags><a href=/tags/java/>Java</a>
+<a href=/tags/spring-boot/>Spring Boot</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/distributed-lock/><div class=article-details><h2 class=article-title>分布式锁</h2></div></a></article><article><a href=/post/thread-pool/><div class=article-details><h2 class=article-title>Java 线程池</h2></div></a></article><article><a href=/post/java-microbenchmark-harness/><div class=article-details><h2 class=article-title>Java Microbenchmark Harness</h2></div></a></article><article><a href=/post/ognl-language-guide/><div class=article-details><h2 class=article-title>OGNL Language Guide</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Lucas's Article</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
