@@ -2,13 +2,12 @@
 title: 'Redis'
 slug: 'redis'
 description: Redis 相关内容
-date: 2025-02-13T17:22:06+08:00
+date: 2025-02-11T17:22:06+08:00
 image:
 categories:
   - Dev
 tags:
   - Redis
-draft: true
 ---
 
 <!--more-->
@@ -26,7 +25,11 @@ draft: true
 
 ### Hash
 
+存储对象，相比于 String 序列化存储，可以少一个序列化反序列化的过程
+
 ### Sorted Set
+
+排行榜可以使用
 
 ## 缓存读写策略
 
