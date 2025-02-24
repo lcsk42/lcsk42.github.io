@@ -11,6 +11,7 @@
 identifier = "github"
 name = "GitHub"
 url = "https://github.com/lcsk42"
+weight = 10
 
 [social.params]
 icon = "brand-github"
@@ -19,6 +20,7 @@ icon = "brand-github"
 identifier = "twitter"
 name = "Twitter"
 url = "https://x.com/lcsk42"
+weight = 30
 
 [social.params]
 icon = "brand-twitter"
@@ -27,6 +29,7 @@ icon = "brand-twitter"
 identifier = "mail"
 name = "Mail"
 url = "mailto:lcsk42@gmail.com"
+weight = 20
 
 [social.params]
 icon = "brand-mail"
@@ -35,6 +38,7 @@ icon = "brand-mail"
 identifier = "rss"
 name = "RSS"
 url = "/index.xml"
+weight = 40
 
 [social.params]
 icon = "brand-rss"
