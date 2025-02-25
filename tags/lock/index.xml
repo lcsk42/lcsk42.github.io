@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Lock on Lucas's Article</title><link>https://www.lcsk42.com/tags/lock/</link><description>Recent content in Lock on Lucas's Article</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 13 Feb 2025 15:20:10 +0800</lastBuildDate><atom:link href="https://www.lcsk42.com/tags/lock/index.xml" rel="self" type="application/rss+xml"/><item><title>分布式锁</title><link>https://www.lcsk42.com/post/distributed-lock/</link><pubDate>Thu, 13 Feb 2025 15:20:10 +0800</pubDate><guid>https://www.lcsk42.com/post/distributed-lock/</guid><description>&lt;p>分别介绍了 Redis, ZooKeeper 和数据库实现分布式锁的相关内容。&lt;/p>
+&lt;h2 id="redis">Redis
+&lt;/h2>&lt;p>Redission 实现加锁，并增加看门狗进行续期。&lt;/p>
+&lt;ul>
+&lt;li>执行 lock.lock() 进行加锁&lt;/li>
+&lt;li>如果设置的有过期时间，就按照设置的过期时间执行执行 Lua 脚本进行加锁，如果没有设置过期时间，默认过期时间为 internalLockLeaseTime （30s）&lt;/li>
+&lt;li>加锁成功
+&lt;ul>
+&lt;li>如果没有设置过期时间，机遇 Netty 的时间轮启动一个后台任务，每隔 internalLockLeaseTime / 3 (10s) 检查当前任务是否完成，如果没有完成，就将过期时间重新设置为 30s&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>加锁失败
+&lt;ul>
+&lt;li>订阅这个锁的 channel&lt;/li>
+&lt;li>while 循环尝试获取锁直到成功&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="看门狗什么时候进行锁续期什么时候停止续期">看门狗什么时候进行锁续期，什么时候停止续期
+&lt;/h3>&lt;p>续期：&lt;/p>
+&lt;ul>
+&lt;li>加锁时，没有指定过期时间，则默认过期时间为 30s 且每隔 10s 进行锁续期操作&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>停止续期：&lt;/p>
+&lt;ol>
+&lt;li>锁被释放&lt;/li>
+&lt;li>续期时发生异常&lt;/li>
+&lt;li>执行锁续期 Lua 脚本失败&lt;/li>
+&lt;li>应用宕机、下线或重启后，续期任务将结束(Redission 的续期时 Netty 时间轮)&lt;/li>
+&lt;/ol>
+&lt;h3 id="lock-和-trylock-有什么区别">lock() 和 tryLock() 有什么区别
+&lt;/h3>&lt;ul>
+&lt;li>lock 的原理是以阻塞的方式获取锁，如果获取失败则一直等待，直到获取成功&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;ul>
+&lt;li>tryLock 是尝试获取锁，如果能获取直接返回 true&lt;/li>
+&lt;li>如果没有指定超时时间，则直接返回 false&lt;/li>
+&lt;li>如果指定了超时时间，在超时时间内，还会尝试获取锁，如果超过了超市时间还没有获取到，则也返回 false&lt;/li>
+&lt;/ul>
+&lt;h3 id="如何保证主从哨兵下的多节点问题">如何保证主从、哨兵下的多节点问题
+&lt;/h3>&lt;p>使用 RedLock , Redission 中有相关实现。&lt;/p>
+&lt;p>大致原理是获取节点数一半以上的节点的认可，才算加锁成功。&lt;/p>
+&lt;p>具体过程如下：&lt;/p>
+&lt;ol>
+&lt;li>获取当前时间（毫秒）&lt;/li>
+&lt;li>依次从 n 个节点，使用**相同的 key 和随机值（例如 UUID）**获取锁&lt;/li>
+&lt;li>当向 Redis 请求获取锁时，客户端应该设置一个超时时间，这个时间要远小于锁失效的时间 &lt;strong>（例如，如果自动释放时间为 10 秒，超时时间可能在 5-50 毫秒范围内）。这可以防止客户端在尝试与宕机的 Redis 节点通信时被长时间阻塞：如果一个实例不可用，客户端应该尽快尝试与下一个实例通信&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>客户端计算获取锁所用的时间减去步骤 1 的时间，就获得了获取锁消耗的时间&lt;/strong>。当前仅当大多数（N/2+1）的 Redis 节点都获取到锁，并且获取锁使用的时间小于锁失效的时间，锁才算获取成功&lt;/li>
+&lt;li>成功获取锁后，&lt;strong>key 的真正有效时间=TTL-锁的获取时间-时钟漂移&lt;/strong>&lt;/li>
+&lt;li>如果客户端由于某种原因未能获取锁（无法锁定 N/2+1 个实例或有效时间为负），它将尝试解锁所有实例（甚至是它认为自己无法锁定的实例）&lt;/li>
+&lt;/ol>
+&lt;p>存在的问题:&lt;/p>
+&lt;ol>
+&lt;li>使用成本较高(性能问题：setnx 和 Redission 实现的分布式锁只需要在一个节点写成功就行了，而 RedLock 需要写多个节点才算加锁成功)&lt;/li>
+&lt;li>并不能完全解决分布式锁的问题(严重依赖系统时间、 无法应对无持久化的节点重启、脑裂（网络分区）)&lt;/li>
+&lt;/ol>
+&lt;h2 id="zookeeper">Zookeeper
+&lt;/h2>&lt;h3 id="实现方案">实现方案
+&lt;/h3>&lt;ol>
+&lt;li>创建一个锁目录 /locks，该节点为持久节点&lt;/li>
+&lt;li>想要获取锁的线程都在锁目录下创建一个临时顺序节点&lt;/li>
+&lt;li>获取锁目录下所有子节点，对子节点按自增序号从小到大排序&lt;/li>
+&lt;li>判断本节点是不是第一个子节点（序号最小），如果是，则获取锁成功，反之，则监听自己的上一个节点的删除事件&lt;/li>
+&lt;li>持有锁的线程只需要删除当前节点，就可释放锁&lt;/li>
+&lt;li>当自己监听的节点被删除时，监听事件触发，则回到第 3 步重新进行判断，直到获取锁&lt;/li>
+&lt;/ol>
+&lt;p>优点：&lt;/p>
+&lt;ul>
+&lt;li>ZK 保证数据的强一致性&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>问题：&lt;/p>
+&lt;ol>
+&lt;li>性能问题：ZK 在性能方面不如 Redis 高，因为每次创建和释放锁都要创建、销毁节点，并且只能由 Leader 执行之后同步给所有的 Follower&lt;/li>
+&lt;li>并发问题：网络波动下，客户端与 ZK 断连，ZK 会删除临时节点，这时候其他客户端可以获取到分布式锁&lt;/li>
+&lt;/ol>
+&lt;h2 id="mysql">MySql
+&lt;/h2>&lt;p>使用唯一索引，使用数据插入尝试作为加锁，如果可以插入成功，则获取锁，执行业务，否则则是已经被抢占。&lt;/p>
+&lt;p>可使用情况不多，不进行过多的赘述。&lt;/p></description></item></channel></rss>
