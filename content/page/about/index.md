@@ -6,7 +6,7 @@ menu:
   main:
     weight: 3
     params:
-      icon: brand-funimation
+      icon: brand-pagekit
 ---
 
 你好，欢迎来到我的页面！
