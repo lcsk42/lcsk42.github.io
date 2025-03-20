@@ -30,8 +30,10 @@ menu:
 - [Ops: Operations](/categories/ops/)，运维，涵盖系统管理、部署、监控、CI/CD 等与系统运行相关的工作
 - [SE: Software Engineering](/categories/ops/)，软件工程，涉及软件的架构设计、开发流程、团队协作等方面
 - [CS: Computer Science](/categories/cs/)，计算机科学，用于分享计算机科学领域的基本概念、算法、数据结构、理论知识等，帮助深入理解计算机的工作原理与基础
-- [WR: Weekly Report](/categories/wr/)，周报，用于记录每周的工作总结、计划与进展
+- [Weekly](/categories/Weekly/)，周报，用于记录每周的工作总结、计划与进展
 - [Idea](/categories/idea/): 想法，用于记录灵感、创意和未来可能实现的技术构想
+- [Memo](/categories/memo/): 备忘录，用于记录一些临时的信息、任务、提醒等日常事项
+- [Life](/categories/life/): 生活，用于分享生活中的点滴，旅行、日常感悟、书籍电影等
 
 ## Tags
 
