@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on Lucas's Article</title><link>https://www.lcsk42.com/page/</link><description>Recent content in Pages on Lucas's Article</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://www.lcsk42.com/page/index.xml" rel="self" type="application/rss+xml"/><item><title>About</title><link>https://www.lcsk42.com/about/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://www.lcsk42.com/about/</guid><description>&lt;p>你好，欢迎来到我的页面！&lt;/p>
+&lt;p>我的名字是 &lt;strong>Lucas Chen&lt;/strong>，是一名来自 &lt;strong>中国郑州&lt;/strong> 的 &lt;strong>全栈工程师&lt;/strong>。&lt;/p>
+&lt;p>希望你能在这个网站上找到一些有价值的内容，激发你的兴趣或帮助你在自己的旅程中前进。无论你是来探索我的作品，了解更多技术，还是单纯地建立联系，我都很高兴你能来到这里！&lt;/p>
+&lt;p>如果你有任何问题或希望合作，随时联系我：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Email&lt;/strong>: &lt;a class="link" href="mailto:lcsk42@gmail.com" >lcsk42@gmail.com&lt;/a>&lt;/li>
+&lt;li>&lt;strong>GitHub&lt;/strong>: &lt;a class="link" href="https://github.com/lcsk42" target="_blank" rel="noopener"
+>github.com/lcsk42&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>本网站上的所有内容都遵循 &lt;a class="link" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"
+>CC BY-NC-SA 4.0&lt;/a> 许可协议。如果你觉得有帮助，欢迎分享，但请注明作者并附上原始链接。&lt;/p>
+&lt;h2 id="categories">Categories
+&lt;/h2>&lt;p>网站下的所有文章都被划分为以下几类，可能有一些是前期规划（&lt;del>大饼&lt;/del>），实际上（目前）可能并没有内容（但放心，会有的，面包和牛奶都会有的）。乁( •_• )ㄏ&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/dev/" >Dev: Development&lt;/a>，开发，用于涉及编程、技术实现、框架、语言等与开发相关的内容&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/ops/" >Ops: Operations&lt;/a>，运维，涵盖系统管理、部署、监控、CI/CD 等与系统运行相关的工作&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/ops/" >SE: Software Engineering&lt;/a>，软件工程，涉及软件的架构设计、开发流程、团队协作等方面&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/cs/" >CS: Computer Science&lt;/a>，计算机科学，用于分享计算机科学领域的基本概念、算法、数据结构、理论知识等，帮助深入理解计算机的工作原理与基础&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/Weekly/" >Weekly&lt;/a>，周报，用于记录每周的工作总结、计划与进展&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/idea/" >Idea&lt;/a>: 想法，用于记录灵感、创意和未来可能实现的技术构想&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/memo/" >Memo&lt;/a>: 备忘录，用于记录一些临时的信息、任务、提醒等日常事项&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.lcsk42.com/categories/life/" >Life&lt;/a>: 生活，用于分享生活中的点滴，旅行、日常感悟、书籍电影等&lt;/li>
+&lt;/ul>
+&lt;h2 id="tags">Tags
+&lt;/h2>&lt;p>Tag 没有具体的规则，按照自己的感觉和对内容的认知，进行大的标记。&lt;/p>
+&lt;p>作为交叉索引进行使用。&lt;/p>
+&lt;h2 id="wr">WR
+&lt;/h2>&lt;p>一直很想写周报，进行消息的整理和规划。但是一方面是没有合适的行文规划，另一方面也是懒(纯纯的大懒狗)，所以一直没有开始动笔。&lt;/p>
+&lt;p>在此，先对文章的格式进行规划，希望尽快设计的能让我满意，然后可以开始进入实践。&lt;/p>
+&lt;ul>
+&lt;li>Bits &amp;amp; Bites: 生活中有趣的点点滴滴&lt;/li>
+&lt;li>Dev: 分为后端和前端，后端主要应该是 &lt;code>Java&lt;/code> &amp;amp; &lt;code>Go&lt;/code>, 前端应该就是 &lt;code>Vue&lt;/code>&lt;/li>
+&lt;li>Tutorial: 教程相关资源&lt;/li>
+&lt;li>Book: 本周有没有看哪些书呢？&lt;/li>
+&lt;li>Video: 分享本周有趣的或者印象深刻的视频相关&lt;/li>
+&lt;li>Music: 分享本周喜欢的音乐，如果有&lt;/li>
+&lt;/ul></description></item><item><title>Archives</title><link>https://www.lcsk42.com/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://www.lcsk42.com/archives/</guid><description/></item><item><title>Search</title><link>https://www.lcsk42.com/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.lcsk42.com/search/</guid><description/></item></channel></rss>

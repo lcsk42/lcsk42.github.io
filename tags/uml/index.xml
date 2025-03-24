@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>UML on Lucas's Article</title><link>https://www.lcsk42.com/tags/uml/</link><description>Recent content in UML on Lucas's Article</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 20 Mar 2024 10:17:02 +0800</lastBuildDate><atom:link href="https://www.lcsk42.com/tags/uml/index.xml" rel="self" type="application/rss+xml"/><item><title>UML Class</title><link>https://www.lcsk42.com/post/uml-class/</link><pubDate>Wed, 20 Mar 2024 10:17:02 +0800</pubDate><guid>https://www.lcsk42.com/post/uml-class/</guid><description>&lt;p>UML 类图解析和对应的 PlantUML 效果实现。&lt;/p>
+&lt;h2 id="可见性">可见性
+&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>符号&lt;/th>
+&lt;th>可见性&lt;/th>
+&lt;th>范围&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>+&lt;/td>
+&lt;td>public&lt;/td>
+&lt;td>所有类可见&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>#&lt;/td>
+&lt;td>protected&lt;/td>
+&lt;td>该类子孙可见&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>-&lt;/td>
+&lt;td>private&lt;/td>
+&lt;td>类本身可见&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>~&lt;/td>
+&lt;td>package&lt;/td>
+&lt;td>同一包生命其他类可见&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="关系">关系
+&lt;/h2>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>关系&lt;/th>
+&lt;th>英文&lt;/th>
+&lt;th>关系强弱&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>泛化&lt;/td>
+&lt;td>Generalization&lt;/td>
+&lt;td>6&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>实现&lt;/td>
+&lt;td>Realization&lt;/td>
+&lt;td>5&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>组合&lt;/td>
+&lt;td>Composition&lt;/td>
+&lt;td>4&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>聚合&lt;/td>
+&lt;td>Aggregation&lt;/td>
+&lt;td>3&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>关联&lt;/td>
+&lt;td>Association&lt;/td>
+&lt;td>2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>依赖&lt;/td>
+&lt;td>Dependency&lt;/td>
+&lt;td>1&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="关系符号基础">关系符号基础
+&lt;/h3>&lt;p>类图关系的符号由三部分组成：箭头、线条和箭尾：&lt;/p>
+&lt;p>&lt;img src="https://www.lcsk42.com/post/uml-class/uml-class-relation.png"
+width="305"
+height="95"
+srcset="https://www.lcsk42.com/post/uml-class/uml-class-relation_hu_221a6cfb5351f6ec.png 480w, https://www.lcsk42.com/post/uml-class/uml-class-relation_hu_d6ca14f01c2b0d62.png 1024w"
+loading="lazy"
+alt="uml-class-relation"
+class="gallery-image"
+data-flex-grow="321"
+data-flex-basis="770px"
+>&lt;/p>
+&lt;p>箭头形状有两种，分别为箭头和三角箭头:&lt;/p>
+&lt;p>&lt;img src="https://www.lcsk42.com/post/uml-class/uml-class-relation-arrow.png"
+width="345"
+height="97"
+srcset="https://www.lcsk42.com/post/uml-class/uml-class-relation-arrow_hu_aef574ab66bb67a7.png 480w, https://www.lcsk42.com/post/uml-class/uml-class-relation-arrow_hu_8b55396ad727db48.png 1024w"
+loading="lazy"
+alt="uml-class-relation-arrow"
+class="gallery-image"
+data-flex-grow="355"
+data-flex-basis="853px"
+>&lt;/p>
+&lt;p>线条形状有两种，分别为实线和虚线:&lt;/p>
+&lt;p>&lt;img src="https://www.lcsk42.com/post/uml-class/uml-class-relation-line.png"
+width="300"
+height="64"
+srcset="https://www.lcsk42.com/post/uml-class/uml-class-relation-line_hu_29c758e1b6262c8a.png 480w, https://www.lcsk42.com/post/uml-class/uml-class-relation-line_hu_770e40c85c677f0d.png 1024w"
+loading="lazy"
+alt="uml-class-relation-line"
+class="gallery-image"
+data-flex-grow="468"
+data-flex-basis="1125px"
+>&lt;/p>
+&lt;p>箭尾形状有三种，分别为点、空心菱形和实心菱形:&lt;/p>
+&lt;p>&lt;img src="https://www.lcsk42.com/post/uml-class/uml-class-relation-nock.png"
+width="444"
+height="88"
+srcset="https://www.lcsk42.com/post/uml-class/uml-class-relation-nock_hu_c088bb4e911b59ae.png 480w, https://www.lcsk42.com/post/uml-class/uml-class-relation-nock_hu_d9a41594eb3ca4dd.png 1024w"
+loading="lazy"
+alt="uml-class-relation-nock"
+class="gallery-image"
+data-flex-grow="504"
+data-flex-basis="1210px"
+>&lt;/p>
+&lt;h3 id="符号优先级">符号优先级
+&lt;/h3>&lt;p>整体：箭头 &amp;gt; 箭尾 &amp;gt; 线条&lt;/p>
+&lt;p>箭头：三角箭头 &amp;gt; 箭头&lt;/p>
+&lt;p>箭尾：实心菱形 &amp;gt; 空心菱形 &amp;gt; 点&lt;/p>
+&lt;p>线条：实线 &amp;gt; 虚线&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>组合&lt;/th>
+&lt;th>关系&lt;/th>
+&lt;th>英文&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>三角箭头 + 实线&lt;/td>
+&lt;td>泛化&lt;/td>
+&lt;td>Generalization&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>三角箭头 + 虚线&lt;/td>
+&lt;td>实现&lt;/td>
+&lt;td>Realization&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>实心菱形 + 实线&lt;/td>
+&lt;td>组合&lt;/td>
+&lt;td>Composition&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>实心菱形 + 虚线&lt;/td>
+&lt;td>聚合&lt;/td>
+&lt;td>Aggregation&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>箭头 + 实线&lt;/td>
+&lt;td>关联&lt;/td>
+&lt;td>Association&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>箭头 + 虚线&lt;/td>
+&lt;td>依赖&lt;/td>
+&lt;td>Dependency&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="关系解析">关系解析
+&lt;/h2>&lt;h3 id="泛化继承-generalization">泛化（继承） Generalization
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ClassA &amp;lt;|-- ClassB
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头指向：三角箭头 + 实线，&lt;strong>表示继承一个基类，ClassB 继承 ClassA&lt;/strong>
+泛化关系：是一种继承关系，表示一般与特殊的关系，它指定了子类如何特化父类的所有特征和行为&lt;/p>
+&lt;h3 id="实现-realization">实现 Realization
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">interface InterfaceA
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">InterfaceA &amp;lt;|.. ClassC
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头指向: 三角箭头 + 虚线,箭头指向接口，&lt;strong>表示 C 类实线接口定义&lt;/strong>
+实线关系: 类与接口的关系，表示类实现了接口的所有特征和行为&lt;/p>
+&lt;h3 id="组合-composition">组合 Composition
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Department --* Company
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头方向: 实心菱形 + 实线，菱形指向整体
+组合关系: 整体和部分的关系，&lt;strong>部分不能离开整体而单独存在&lt;/strong>&lt;/p>
+&lt;h3 id="聚合-aggregation">聚合 Aggregation
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Wheel --o Car
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头方向: 空心菱形 + 实线, 菱形指向整体
+聚合关系: 是整体和部分的关系，&lt;strong>部分可以离开整体单独存在&lt;/strong>&lt;/p>
+&lt;h3 id="关联-association">关联 Association
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ClassAA &amp;lt;-- ClassBB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ClassAAA -- ClassBBB
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ClassAAAA &amp;lt;--&amp;gt; ClassBBBB
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头方向：箭头 + 实线,指向被拥有着
+关联关系：拥有关系，&lt;strong>一个类知道另一个类的特征和行为&lt;/strong>
+PS: 分为单向关联和双向关联，双向关联可以两个箭头，也可以不要箭头&lt;/p>
+&lt;h3 id="依赖-dependency">依赖 Dependency
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ClassAAAAA &amp;lt;.. ClassBBBBB
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>箭头方向：箭头 + 虚线，指向被使用者
+依赖关系：使用关系，&lt;strong>一个类的实现需要另一个类的协助&lt;/strong>&lt;/p>
+&lt;h2 id="plantuml">PlantUML
+&lt;/h2>&lt;p>效果：&lt;/p>
+&lt;p>&lt;img src="https://www.lcsk42.com/post/uml-class/uml-class-plantuml.png"
+width="1300"
+height="315"
+srcset="https://www.lcsk42.com/post/uml-class/uml-class-plantuml_hu_30ae6d87370c294.png 480w, https://www.lcsk42.com/post/uml-class/uml-class-plantuml_hu_e777a5524e3fe681.png 1024w"
+loading="lazy"
+alt="uml-class-plantuml"
+class="gallery-image"
+data-flex-grow="412"
+data-flex-basis="990px"
+>&lt;/p>
+&lt;p>代码：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="nx">startuml&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">class&lt;/span> &lt;span class="nx">Dummy&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">+&lt;/span>&lt;span class="nx">field1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">#&lt;/span>&lt;span class="nx">field2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="nx">field3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">~&lt;/span>&lt;span class="nx">field4&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">+&lt;/span>&lt;span class="nf">method1&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">#&lt;/span>&lt;span class="nf">method2&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="nf">method3&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">~&lt;/span>&lt;span class="nf">method4&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Generalization&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ClassA&lt;/span> &lt;span class="p">&amp;lt;|&lt;/span>&lt;span class="o">--&lt;/span> &lt;span class="nx">ClassB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Realization&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">interface&lt;/span> &lt;span class="nx">InterfaceA&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">InterfaceA&lt;/span> &lt;span class="p">&amp;lt;|..&lt;/span> &lt;span class="nx">ClassC&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Composition&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Department&lt;/span> &lt;span class="o">--*&lt;/span> &lt;span class="nx">Company&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Aggregation&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">Wheel&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="nx">o&lt;/span> &lt;span class="nx">Car&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Association&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ClassAA&lt;/span> &lt;span class="o">&amp;lt;--&lt;/span> &lt;span class="nx">ClassBB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ClassAAA&lt;/span> &lt;span class="o">--&lt;/span> &lt;span class="nx">ClassBBB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ClassAAAA&lt;/span> &lt;span class="o">&amp;lt;--&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nx">ClassBBBB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="s">&amp;#34;Dependency&amp;#34;&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="nx">Rectangle&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">ClassAAAAA&lt;/span> &lt;span class="p">&amp;lt;..&lt;/span> &lt;span class="nx">ClassBBBBB&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">@&lt;/span>&lt;span class="nx">enduml&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

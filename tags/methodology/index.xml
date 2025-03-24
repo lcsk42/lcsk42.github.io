@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Methodology on Lucas's Article</title><link>https://www.lcsk42.com/tags/methodology/</link><description>Recent content in Methodology on Lucas's Article</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Feb 2025 13:00:32 +0800</lastBuildDate><atom:link href="https://www.lcsk42.com/tags/methodology/index.xml" rel="self" type="application/rss+xml"/><item><title>服务器服务管理</title><link>https://www.lcsk42.com/post/deployment-configs/</link><pubDate>Tue, 04 Feb 2025 13:00:32 +0800</pubDate><guid>https://www.lcsk42.com/post/deployment-configs/</guid><description>&lt;p>介绍一下服务器中服务管理的方法。&lt;/p>
+&lt;h2 id="服务器服务管理">服务器服务管理
+&lt;/h2>&lt;h3 id="管理技术选型">管理技术选型
+&lt;/h3>&lt;p>在服务器服务管理中，选择合适的管理技术至关重要。当前，虚拟化技术因其高效性和灵活性，成为管理容器的首选方案。基于此，Docker 被选为运行各项服务的基础平台。Docker 不仅提供了轻量级的虚拟化环境，还能确保应用在不同环境中的一致性，极大地简化了部署和迁移过程。&lt;/p>
+&lt;p>然而，直接使用 &lt;code>docker run&lt;/code> 命令来运行各个服务存在一定的局限性，尤其是在服务数量增多时，难以进行有效的归类整理和统一管理。为了解决这一问题，&lt;code>docker-compose&lt;/code> 被选为服务管理工具。&lt;code>docker-compose&lt;/code> 允许通过一个简单的 YAML 文件定义和管理多个容器，极大地提高了服务的可维护性和可扩展性。&lt;/p>
+&lt;p>关于为什么不使用 Kubernetes (k8s) 或 k3s 等更复杂的容器编排系统，主要原因在于它们的体量较大，适合大规模、高可用性的生产环境。在企业生产实践中，为了保证服务的高可用性，通常会采用多实例部署，并依赖滚动更新、自动重启等功能。然而，对于当前场景，服务的体量较小，且对高可用性的要求相对较低。更倾向于在服务出现问题时，通过及时通知和手动干预来恢复服务，而不是依赖复杂的自动化机制。因此，选择 &lt;code>docker-compose&lt;/code> 不仅简化了管理流程，还降低了系统的复杂性和维护成本。&lt;/p>
+&lt;p>综上所述，基于当前的需求和技术特点，使用 Docker 结合 &lt;code>docker-compose&lt;/code> 是一种既高效又实用的服务器服务管理方案。&lt;/p>
+&lt;h3 id="文件夹结构">文件夹结构
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">- deployment-configs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">|-- scripts # 用于管理服务的实用程序脚本
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| |-- start-all.sh # 启动所有服务
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| |-- stop-all.sh # 关闭所有服务
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">|-- services # 包含各个服务的配置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| |-- bark # bark 通知服务
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- data # bark 数据存醋
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- docker-compose.yml # bark 启动配置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| |-- mysql # mysql 数据库
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- data # mysql 数据存醋
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- docker-compose.yml # mysql 启动配置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- logs # mysql 日志文件位置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| | |-- my.cnf # mysql 相关配置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">|-- shared # 包括环境变量和网络设置等共享配置
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">| |-- common.env # 通用环境变量
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">|-- README.md # 介绍各个服务和相关命令
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>提供一下脚本，可直接执行，创建响应的目录结构&lt;/p>&lt;/blockquote>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;span class="lnt">79
+&lt;/span>&lt;span class="lnt">80
+&lt;/span>&lt;span class="lnt">81
+&lt;/span>&lt;span class="lnt">82
+&lt;/span>&lt;span class="lnt">83
+&lt;/span>&lt;span class="lnt">84
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建根目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p deployment-configs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 进入根目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> deployment-configs
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 scripts 目录及其文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p scripts
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 start-all.sh 文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch scripts/start-all.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 写入以下内容到 start-all.sh 文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; scripts/start-all.sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"># Start all services defined in the &amp;#39;services&amp;#39; directory
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;Starting all services...&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"># Loop through each service directory and bring up the service
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">for service in services/*; do
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> if [ -d &amp;#34;$service&amp;#34; ]; then
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> echo &amp;#34;Starting service: $service&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> cd &amp;#34;$service&amp;#34; || continue
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> docker-compose up -d
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> cd - || continue
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> fi
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">done
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;All services started.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 stop-all.sh 文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch scripts/stop-all.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 写入 stop-all.sh 内容&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; scripts/stop-all.sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"># Stop all services defined in the &amp;#39;services&amp;#39; directory
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;Stopping all services...&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"># Loop through each service directory and bring down the service
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">for service in services/*; do
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> if [ -d &amp;#34;$service&amp;#34; ]; then
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> echo &amp;#34;Stopping service: $service&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> cd &amp;#34;$service&amp;#34; || continue
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> docker-compose down
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> cd - || continue
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"> fi
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">done
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">echo &amp;#34;All services stopped.&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 services 目录&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p services/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 shared 目录及其文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p shared
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch shared/common.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 README.md 文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">touch README.md
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cat &lt;span class="s">&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; README.md
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s"># Deployment Configs
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">## Overview
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">This repository contains configuration files and setups for deploying services using Docker Compose. It is organized into modular directories for individual services and shared resources.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">## Structure
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">- `services/`: Contains configurations for individual services.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">- `shared/`: Includes shared configurations such as environment variables and network settings.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">- `scripts/`: Utility scripts for managing services.
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 设置文件权限（可选）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x scripts/start-all.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x scripts/stop-all.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="如何保留空文件夹">如何保留空文件夹
+&lt;/h3>&lt;p>在使用 Git 进行服务管理和同步时，通常不希望将 &lt;code>data&lt;/code>、&lt;code>logs&lt;/code> 等文件夹中的文件同步到远程仓库，因为这些文件可能包含临时数据或敏感信息。为了避免这些文件被同步，可以通过配置 &lt;code>.gitignore&lt;/code> 文件来忽略它们，例如：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">**/data/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">**/logs/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">**/cert/*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">**/nginx/files/**
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然而，配置忽略规则后，在推送代码到远程仓库或从远程仓库拉取代码时，这些文件夹将不会被创建。这可能导致在运行 docker-compose up -d 启动服务时出现问题，因为某些服务可能依赖这些文件夹的存在。&lt;/p>
+&lt;p>为了解决这一问题，既需要避免将文件夹中的文件同步到远程仓库，又需要确保这些空文件夹能够被传输到远程并在拉取时保留，可以在每个需要保留的文件夹中添加一个 &lt;code>.gitignore&lt;/code> 文件，并在其中配置规则，使其不忽略自身。具体方法如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;*\n!.gitignore&amp;#39;&lt;/span> &amp;gt;&amp;gt; .gitignore
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上述命令会在 &lt;code>.gitignore&lt;/code> 文件中添加两行内容：第一行 &lt;code>*&lt;/code> 表示忽略该文件夹中的所有文件，第二行 &lt;code>!.gitignore&lt;/code> 表示不忽略 &lt;code>.gitignore&lt;/code> 文件本身。这样，Git 会保留空文件夹及其中的 &lt;code>.gitignore&lt;/code> 文件，同时忽略其他文件，从而满足服务启动时的依赖需求。&lt;/p>
+&lt;p>通过这种方式，既避免了不必要文件的同步，又确保了文件夹结构的完整性。&lt;/p></description></item></channel></rss>
