@@ -203,3 +203,420 @@ public class EagerThreadPoolExecutor extends ThreadPoolExecutor {
 维护了一个任务数量的字段，是一个原子类，添加任务时自增，任务异常及结束时递减。
 
 这样就能保证 `TaskQueue#offer(Runnable runnable)` 做出逻辑处理
+
+## 构建线程池
+
+### Builder
+
+```java
+import java.io.Serializable;
+
+/**
+ * Builder 模式抽象接口
+ *
+ * @param <T>
+ */
+public interface Builder<T> extends Serializable {
+
+    /**
+     * 构建方法
+     *
+     * @return 构建后的对象
+     */
+    T build();
+}
+
+```
+
+### ThreadFactoryBuilder
+
+```java
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serial;
+import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicLong;
+
+/**
+ * 线程工厂构建器，提供灵活的线程配置选项。
+ * <p>
+ * 支持设置线程名前缀、守护线程状态、优先级和未捕获异常处理器等配置。
+ * 采用建造者模式，支持链式调用。
+ * </p>
+ */
+// 私有构造方法，只允许使用 builder() 方法创建实例。
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ThreadFactoryBuilder implements Builder<ThreadFactory> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private ThreadFactory backingThreadFactory;
+    private String namePrefix;
+    private Boolean daemon;
+    private Integer priority;
+    private Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+
+
+    /**
+     * 创建新的ThreadFactoryBuilder实例。
+     *
+     * @return 新的ThreadFactoryBuilder实例
+     */
+    public static ThreadFactoryBuilder builder() {
+        return new ThreadFactoryBuilder();
+    }
+
+    /**
+     * 设置底层线程工厂。如果未设置，将使用 Executors.defaultThreadFactory()。
+     *
+     * @param backingThreadFactory 底层线程工厂
+     * @return 当前构建器实例
+     * @throws NullPointerException 如果 backingThreadFactory 为 null
+     */
+    public ThreadFactoryBuilder threadFactory(@NotNull ThreadFactory backingThreadFactory) {
+        this.backingThreadFactory = Objects.requireNonNull(backingThreadFactory,
+                "backingThreadFactory cannot be null");
+        return this;
+    }
+
+    /**
+     * 设置线程名前缀。如果设置，线程名将为 "前缀_序号" 格式。
+     *
+     * @param namePrefix 线程名前缀
+     * @return 当前构建器实例
+     */
+    public ThreadFactoryBuilder prefix(String namePrefix) {
+        this.namePrefix = namePrefix;
+        return this;
+    }
+
+    /**
+     * 设置是否为守护线程。
+     *
+     * @param daemon 是否为守护线程
+     * @return 当前构建器实例
+     */
+    public ThreadFactoryBuilder daemon(boolean daemon) {
+        this.daemon = daemon;
+        return this;
+    }
+
+    /**
+     * 设置线程优先级。
+     *
+     * @param priority 线程优先级(1-10)
+     * @return 当前构建器实例
+     * @throws IllegalArgumentException 如果优先级不在 Thread.MIN_PRIORITY(1) 和 Thread.MAX_PRIORITY(10) 之间
+     */
+    public ThreadFactoryBuilder priority(int priority) {
+        if (priority < Thread.MIN_PRIORITY) {
+            throw new IllegalArgumentException(String.format("Thread priority (%s) must be >= %s",
+                    priority, Thread.MIN_PRIORITY));
+        }
+        if (priority > Thread.MAX_PRIORITY) {
+            throw new IllegalArgumentException(String.format("Thread priority (%s) must be <= %s",
+                    priority, Thread.MAX_PRIORITY));
+        }
+        this.priority = priority;
+        return this;
+    }
+
+    /**
+     * 设置未捕获异常处理器。
+     *
+     * @param uncaughtExceptionHandler 未捕获异常处理器
+     * @return 当前构建器实例
+     */
+    public ThreadFactoryBuilder uncaughtExceptionHandler(Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
+        this.uncaughtExceptionHandler = uncaughtExceptionHandler;
+        return this;
+    }
+
+    /**
+     * 构建配置好的 ThreadFactory 实例。
+     *
+     * @return 配置好的 ThreadFactory 实例
+     */
+    @Override
+    public ThreadFactory build() {
+        return build(this);
+    }
+
+    /**
+     * 内部构建方法，根据配置创建 ThreadFactory。
+     *
+     * @param builder 构建器实例
+     * @return 配置好的 ThreadFactory
+     */
+    private static ThreadFactory build(ThreadFactoryBuilder builder) {
+        final ThreadFactory backingThreadFactory = (null != builder.backingThreadFactory)
+                ? builder.backingThreadFactory
+                : Executors.defaultThreadFactory();
+
+        final String namePrefix = builder.namePrefix;
+        final Boolean daemon = builder.daemon;
+        final Integer priority = builder.priority;
+        final Thread.UncaughtExceptionHandler handler = builder.uncaughtExceptionHandler;
+        final AtomicLong count = (null == namePrefix) ? null : new AtomicLong();
+
+        return r -> {
+            final Thread thread = backingThreadFactory.newThread(r);
+            // 设置线程名称(如果配置了前缀)
+            if (null != namePrefix) {
+                thread.setName(namePrefix + "_" + count.getAndIncrement());
+            }
+            // 设置守护线程状态(如果配置)
+            if (null != daemon) {
+                thread.setDaemon(daemon);
+            }
+            // 设置线程优先级(如果配置)
+            if (null != priority) {
+                thread.setPriority(priority);
+            }
+            // 设置未捕获异常处理器(如果配置)
+            if (null != handler) {
+                thread.setUncaughtExceptionHandler(handler);
+            }
+            return thread;
+        };
+    }
+}
+
+```
+
+### ThreadPoolBuilder
+
+```java
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.springframework.util.Assert;
+
+import java.math.BigDecimal;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 线程池构建器，提供链式API配置并创建ThreadPoolExecutor实例。
+ * 这是一个不可变构建器，线程安全。
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ThreadPoolBuilder implements Builder<ThreadPoolExecutor> {
+
+    // 默认核心线程数为CPU核心数的5倍（基于20%利用率计算）
+    private int corePoolSize = calculateCoreNum();
+
+    // 默认最大线程数为核心线程数的 1.5 倍
+    private int maximumPoolSize = corePoolSize + (corePoolSize >> 1);
+
+    // 默认线程空闲存活时间 30 秒
+    private long keepAliveTime = 30_000L;
+
+    // 默认时间单位为毫秒
+    private TimeUnit timeUnit = TimeUnit.MILLISECONDS;
+
+    // 默认工作队列为无界队列，容量 4096
+    private BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(4096);
+
+    // 默认拒绝策略为 AbortPolicy
+    private RejectedExecutionHandler rejectedExecutionHandler = new ThreadPoolExecutor.AbortPolicy();
+
+    // 默认线程为非守护线程
+    private boolean isDaemon = false;
+
+    // 线程名前缀
+    private String threadNamePrefix;
+
+    // 线程工厂
+    private ThreadFactory threadFactory;
+
+    /**
+     * 创建 ThreadPoolBuilder 实例的工厂方法
+     *
+     * @return 新的 ThreadPoolBuilder 实例
+     */
+    public static ThreadPoolBuilder builder() {
+        return new ThreadPoolBuilder();
+    }
+
+    /**
+     * 计算默认核心线程数，基于 CPU 核心数和 20% 利用率
+     *
+     * @return 计算后的核心线程数
+     */
+    private int calculateCoreNum() {
+        int cpuCoreNum = Runtime.getRuntime().availableProcessors();
+        return new BigDecimal(cpuCoreNum).divide(new BigDecimal("0.2")).intValue();
+    }
+
+    /**
+     * 设置自定义线程工厂
+     *
+     * @param threadFactory 线程工厂实例
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder threadFactory(ThreadFactory threadFactory) {
+        this.threadFactory = threadFactory;
+        return this;
+    }
+
+    /**
+     * 设置核心线程数
+     *
+     * @param corePoolSize 核心线程数
+     * @return 当前构建器实例（链式调用）
+     * @throws IllegalArgumentException 如果 corePoolSize 小于0
+     */
+    public ThreadPoolBuilder corePoolSize(int corePoolSize) {
+        if (corePoolSize < 0) {
+            throw new IllegalArgumentException("Core pool size must be non-negative");
+        }
+        this.corePoolSize = corePoolSize;
+        return this;
+    }
+
+    /**
+     * 设置最大线程数，如果小于当前核心线程数则自动调整核心线程数
+     *
+     * @param maximumPoolSize 最大线程数
+     * @return 当前构建器实例（链式调用）
+     * @throws IllegalArgumentException 如果 maximumPoolSize 小于等于 0 或小于核心线程数
+     */
+    public ThreadPoolBuilder maximumPoolSize(int maximumPoolSize) {
+        if (maximumPoolSize <= 0) {
+            throw new IllegalArgumentException("Maximum pool size must be positive");
+        }
+        this.maximumPoolSize = maximumPoolSize;
+        if (maximumPoolSize < this.corePoolSize) {
+            this.corePoolSize = maximumPoolSize;
+        }
+        return this;
+    }
+
+    /**
+     * 设置线程工厂的基本属性
+     *
+     * @param threadNamePrefix 线程名前缀
+     * @param isDaemon         是否为守护线程
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder threadFactory(String threadNamePrefix, Boolean isDaemon) {
+        this.threadNamePrefix = threadNamePrefix;
+        this.isDaemon = isDaemon;
+        return this;
+    }
+
+    /**
+     * 设置线程空闲存活时间（使用默认时间单位毫秒）
+     *
+     * @param keepAliveTime 存活时间
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder keepAliveTime(long keepAliveTime) {
+        this.keepAliveTime = keepAliveTime;
+        return this;
+    }
+
+    /**
+     * 设置线程空闲存活时间和时间单位
+     *
+     * @param keepAliveTime 存活时间
+     * @param timeUnit      时间单位
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder keepAliveTime(long keepAliveTime, TimeUnit timeUnit) {
+        this.keepAliveTime = keepAliveTime;
+        this.timeUnit = timeUnit;
+        return this;
+    }
+
+    /**
+     * 设置拒绝策略
+     *
+     * @param rejectedExecutionHandler 拒绝策略处理器
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder rejected(RejectedExecutionHandler rejectedExecutionHandler) {
+        this.rejectedExecutionHandler = rejectedExecutionHandler;
+        return this;
+    }
+
+    /**
+     * 设置工作队列
+     *
+     * @param workQueue 工作队列实例
+     * @return 当前构建器实例（链式调用）
+     */
+    public ThreadPoolBuilder workQueue(BlockingQueue<Runnable> workQueue) {
+        this.workQueue = workQueue;
+        return this;
+    }
+
+    /**
+     * 构建ThreadPoolExecutor实例
+     *
+     * @return 配置好的ThreadPoolExecutor实例
+     * @throws IllegalArgumentException 如果参数不合法或线程名前缀为空
+     */
+    @Override
+    public ThreadPoolExecutor build() {
+        if (threadFactory == null) {
+            Assert.hasLength(threadNamePrefix, "The thread name prefix cannot be empty or an empty string.");
+            threadFactory = ThreadFactoryBuilder.builder().prefix(threadNamePrefix).daemon(isDaemon).build();
+        }
+        ThreadPoolExecutor executorService;
+        try {
+            executorService = new ThreadPoolExecutor(corePoolSize,
+                    maximumPoolSize,
+                    keepAliveTime,
+                    timeUnit,
+                    workQueue,
+                    threadFactory,
+                    rejectedExecutionHandler);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Error creating thread pool parameter.", ex);
+        }
+        return executorService;
+    }
+}
+
+```
+
+### 使用方式
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+import java.util.concurrent.Executor;
+
+// @EnableAsync 注解可以放在配置类和启动类
+// 如果简单使用，不用自己定义的线程池，放在启动类也行
+// 如果使用了自定义线程池，推荐放在配置类，职责分离
+@EnableAsync
+@Configuration
+public class ThreadPoolConfiguration {
+
+    @Bean
+    // 如果有多个线程池配置，需要配置一个默认的
+    @Primary
+    // 如果想要 @Async 注解使用当前线程池，需要注意，名称必须是 "taskExecutor"
+    public Executor taskExecutor() {
+        // 最简单的创建方式，指定线程前缀即可
+        return ThreadPoolBuilder.builder()
+                .threadFactory("d_task_", false)
+                .build();
+    }
+}
+
+```

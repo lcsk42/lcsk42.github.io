@@ -375,7 +375,7 @@ public class TransactionDemo {
 }
 ```
 
-#### 生命式事务
+#### 声明式事务
 
 `@Transactional` 的全注解方式，实际是通过 AOP 实现。
 
