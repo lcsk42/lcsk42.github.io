@@ -1,0 +1,231 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="介绍服务器软件如何管理"><title>服务器服务管理</title>
+<link rel=canonical href=https://www.lcsk42.com/post/deployment-configs/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="服务器服务管理"><meta property='og:description' content="介绍服务器软件如何管理"><meta property='og:url' content='https://www.lcsk42.com/post/deployment-configs/'><meta property='og:site_name' content="Lucas's Article"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Serve'><meta property='article:tag' content='Methodology'><meta property='article:published_time' content='2025-02-04T13:00:32+08:00'><meta property='article:modified_time' content='2025-02-04T13:00:32+08:00'><meta name=twitter:title content="服务器服务管理"><meta name=twitter:description content="介绍服务器软件如何管理"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_b46f367e8ae3a2b0.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🫠</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lucas's Article</a></h1><h2 class=site-description>Life is short; meeting you is the best fortune.</h2></div></header><ol class=menu-social><li><a href=https://github.com/lcsk42 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=mailto:lcsk42@gmail.com target=_blank title=Mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=https://x.com/lcsk42 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/about/><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-pagekit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.077 20H7V4h11v14h-5.077"/></svg>
+<span>About</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#服务器服务管理>服务器服务管理</a><ol><li><a href=#管理技术选型>管理技术选型</a></li><li><a href=#文件夹结构>文件夹结构</a></li><li><a href=#如何保留空文件夹>如何保留空文件夹</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/ops/>Ops</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/deployment-configs/>服务器服务管理</a></h2><h3 class=article-subtitle>介绍服务器软件如何管理</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Feb 04, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>4 minute read</time></div></footer></div></header><section class=article-content><p>介绍一下服务器中服务管理的方法。</p><h2 id=服务器服务管理>服务器服务管理</h2><h3 id=管理技术选型>管理技术选型</h3><p>在服务器服务管理中，选择合适的管理技术至关重要。当前，虚拟化技术因其高效性和灵活性，成为管理容器的首选方案。基于此，Docker 被选为运行各项服务的基础平台。Docker 不仅提供了轻量级的虚拟化环境，还能确保应用在不同环境中的一致性，极大地简化了部署和迁移过程。</p><p>然而，直接使用 <code>docker run</code> 命令来运行各个服务存在一定的局限性，尤其是在服务数量增多时，难以进行有效的归类整理和统一管理。为了解决这一问题，<code>docker-compose</code> 被选为服务管理工具。<code>docker-compose</code> 允许通过一个简单的 YAML 文件定义和管理多个容器，极大地提高了服务的可维护性和可扩展性。</p><p>关于为什么不使用 Kubernetes (k8s) 或 k3s 等更复杂的容器编排系统，主要原因在于它们的体量较大，适合大规模、高可用性的生产环境。在企业生产实践中，为了保证服务的高可用性，通常会采用多实例部署，并依赖滚动更新、自动重启等功能。然而，对于当前场景，服务的体量较小，且对高可用性的要求相对较低。更倾向于在服务出现问题时，通过及时通知和手动干预来恢复服务，而不是依赖复杂的自动化机制。因此，选择 <code>docker-compose</code> 不仅简化了管理流程，还降低了系统的复杂性和维护成本。</p><p>综上所述，基于当前的需求和技术特点，使用 Docker 结合 <code>docker-compose</code> 是一种既高效又实用的服务器服务管理方案。</p><h3 id=文件夹结构>文件夹结构</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>- deployment-configs
+</span></span><span class=line><span class=cl>|-- scripts           # 用于管理服务的实用程序脚本
+</span></span><span class=line><span class=cl>|  |-- start-all.sh     # 启动所有服务
+</span></span><span class=line><span class=cl>|  |-- stop-all.sh      # 关闭所有服务
+</span></span><span class=line><span class=cl>|-- services          # 包含各个服务的配置
+</span></span><span class=line><span class=cl>|  |-- bark               # bark 通知服务
+</span></span><span class=line><span class=cl>|  |  |-- data               # bark 数据存醋
+</span></span><span class=line><span class=cl>|  |  |-- docker-compose.yml # bark 启动配置
+</span></span><span class=line><span class=cl>|  |-- mysql              # mysql 数据库
+</span></span><span class=line><span class=cl>|  |  |-- data               # mysql 数据存醋
+</span></span><span class=line><span class=cl>|  |  |-- docker-compose.yml # mysql 启动配置
+</span></span><span class=line><span class=cl>|  |  |-- logs               # mysql 日志文件位置
+</span></span><span class=line><span class=cl>|  |  |-- my.cnf             # mysql 相关配置
+</span></span><span class=line><span class=cl>|-- shared            # 包括环境变量和网络设置等共享配置
+</span></span><span class=line><span class=cl>|  |-- common.env       # 通用环境变量
+</span></span><span class=line><span class=cl>|-- README.md         # 介绍各个服务和相关命令
+</span></span></code></pre></td></tr></table></div></div><blockquote><p>提供一下脚本，可直接执行，创建响应的目录结构</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 创建根目录</span>
+</span></span><span class=line><span class=cl>mkdir -p deployment-configs
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 进入根目录</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> deployment-configs
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 scripts 目录及其文件</span>
+</span></span><span class=line><span class=cl>mkdir -p scripts
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 start-all.sh 文件</span>
+</span></span><span class=line><span class=cl>touch scripts/start-all.sh
+</span></span><span class=line><span class=cl><span class=c1># 写入以下内容到 start-all.sh 文件</span>
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt; &#39;EOF&#39; &gt; scripts/start-all.sh
+</span></span></span><span class=line><span class=cl><span class=s>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s># Start all services defined in the &#39;services&#39; directory
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>echo &#34;Starting all services...&#34;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s># Loop through each service directory and bring up the service
+</span></span></span><span class=line><span class=cl><span class=s>for service in services/*; do
+</span></span></span><span class=line><span class=cl><span class=s>  if [ -d &#34;$service&#34; ]; then
+</span></span></span><span class=line><span class=cl><span class=s>    echo &#34;Starting service: $service&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    cd &#34;$service&#34; || continue
+</span></span></span><span class=line><span class=cl><span class=s>    docker-compose up -d
+</span></span></span><span class=line><span class=cl><span class=s>    cd - || continue
+</span></span></span><span class=line><span class=cl><span class=s>  fi
+</span></span></span><span class=line><span class=cl><span class=s>done
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>echo &#34;All services started.&#34;
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 stop-all.sh 文件</span>
+</span></span><span class=line><span class=cl>touch scripts/stop-all.sh
+</span></span><span class=line><span class=cl><span class=c1># 写入 stop-all.sh 内容</span>
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt; &#39;EOF&#39; &gt; scripts/stop-all.sh
+</span></span></span><span class=line><span class=cl><span class=s>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s># Stop all services defined in the &#39;services&#39; directory
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>echo &#34;Stopping all services...&#34;
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s># Loop through each service directory and bring down the service
+</span></span></span><span class=line><span class=cl><span class=s>for service in services/*; do
+</span></span></span><span class=line><span class=cl><span class=s>  if [ -d &#34;$service&#34; ]; then
+</span></span></span><span class=line><span class=cl><span class=s>    echo &#34;Stopping service: $service&#34;
+</span></span></span><span class=line><span class=cl><span class=s>    cd &#34;$service&#34; || continue
+</span></span></span><span class=line><span class=cl><span class=s>    docker-compose down
+</span></span></span><span class=line><span class=cl><span class=s>    cd - || continue
+</span></span></span><span class=line><span class=cl><span class=s>  fi
+</span></span></span><span class=line><span class=cl><span class=s>done
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>echo &#34;All services stopped.&#34;
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 services 目录</span>
+</span></span><span class=line><span class=cl>mkdir -p services/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 shared 目录及其文件</span>
+</span></span><span class=line><span class=cl>mkdir -p shared
+</span></span><span class=line><span class=cl>touch shared/common.env
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 创建 README.md 文件</span>
+</span></span><span class=line><span class=cl>touch README.md
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt; &#39;EOF&#39; &gt; README.md
+</span></span></span><span class=line><span class=cl><span class=s># Deployment Configs
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>## Overview
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>This repository contains configuration files and setups for deploying services using Docker Compose. It is organized into modular directories for individual services and shared resources.
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>## Structure
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>- `services/`: Contains configurations for individual services.
+</span></span></span><span class=line><span class=cl><span class=s>- `shared/`: Includes shared configurations such as environment variables and network settings.
+</span></span></span><span class=line><span class=cl><span class=s>- `scripts/`: Utility scripts for managing services.
+</span></span></span><span class=line><span class=cl><span class=s>
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置文件权限（可选）</span>
+</span></span><span class=line><span class=cl>chmod +x scripts/start-all.sh
+</span></span><span class=line><span class=cl>chmod +x scripts/stop-all.sh
+</span></span></code></pre></td></tr></table></div></div><h3 id=如何保留空文件夹>如何保留空文件夹</h3><p>在使用 Git 进行服务管理和同步时，通常不希望将 <code>data</code>、<code>logs</code> 等文件夹中的文件同步到远程仓库，因为这些文件可能包含临时数据或敏感信息。为了避免这些文件被同步，可以通过配置 <code>.gitignore</code> 文件来忽略它们，例如：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>**/data/*
+</span></span><span class=line><span class=cl>**/logs/*
+</span></span><span class=line><span class=cl>**/cert/*
+</span></span><span class=line><span class=cl>**/nginx/files/**
+</span></span></code></pre></td></tr></table></div></div><p>然而，配置忽略规则后，在推送代码到远程仓库或从远程仓库拉取代码时，这些文件夹将不会被创建。这可能导致在运行 docker-compose up -d 启动服务时出现问题，因为某些服务可能依赖这些文件夹的存在。</p><p>为了解决这一问题，既需要避免将文件夹中的文件同步到远程仓库，又需要确保这些空文件夹能够被传输到远程并在拉取时保留，可以在每个需要保留的文件夹中添加一个 <code>.gitignore</code> 文件，并在其中配置规则，使其不忽略自身。具体方法如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>echo</span> -e <span class=s1>&#39;*\n!.gitignore&#39;</span> &gt;&gt; .gitignore
+</span></span></code></pre></td></tr></table></div></div><p>上述命令会在 <code>.gitignore</code> 文件中添加两行内容：第一行 <code>*</code> 表示忽略该文件夹中的所有文件，第二行 <code>!.gitignore</code> 表示不忽略 <code>.gitignore</code> 文件本身。这样，Git 会保留空文件夹及其中的 <code>.gitignore</code> 文件，同时忽略其他文件，从而满足服务启动时的依赖需求。</p><p>通过这种方式，既避免了不必要文件的同步，又确保了文件夹结构的完整性。</p></section><footer class=article-footer><section class=article-tags><a href=/tags/serve/>Serve</a>
+<a href=/tags/methodology/>Methodology</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/macos-setup/><div class=article-details><h2 class=article-title>Macos Setup</h2></div></a></article><article><a href=/post/software-list/><div class=article-details><h2 class=article-title>软件列表</h2></div></a></article><article><a href=/post/docker-depend-and-health/><div class=article-details><h2 class=article-title>Docker Compose 服务依赖和健康检查</h2></div></a></article><article><a href=/post/arthas/><div class=article-details><h2 class=article-title>Arthas</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Lucas's Article</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

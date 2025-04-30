@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Redis on Lucas's Article</title><link>https://www.lcsk42.com/tags/redis/</link><description>Recent content in Redis on Lucas's Article</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 11 Feb 2025 17:22:06 +0800</lastBuildDate><atom:link href="https://www.lcsk42.com/tags/redis/index.xml" rel="self" type="application/rss+xml"/><item><title>Redis</title><link>https://www.lcsk42.com/post/redis/</link><pubDate>Tue, 11 Feb 2025 17:22:06 +0800</pubDate><guid>https://www.lcsk42.com/post/redis/</guid><description>&lt;h2 id="数据类型和使用场景">数据类型和使用场景
+&lt;/h2>&lt;h3 id="string">String
+&lt;/h3>&lt;h4 id="使用场景">使用场景
+&lt;/h4>&lt;ol>
+&lt;li>常规数据（比如 Session、Token、序列化后的对象、图片的路径）的缓存&lt;/li>
+&lt;li>计数比如用户单位时间的请求数（简单限流可以用到）、页面单位时间的访问数&lt;/li>
+&lt;li>分布式锁(利用 &lt;code>SETNX key value&lt;/code> 命令可以实现一个最简易的分布式锁)&lt;/li>
+&lt;li>&amp;hellip;&lt;/li>
+&lt;/ol>
+&lt;h3 id="hash">Hash
+&lt;/h3>&lt;p>存储对象，相比于 String 序列化存储，可以少一个序列化反序列化的过程&lt;/p>
+&lt;h3 id="sorted-set">Sorted Set
+&lt;/h3>&lt;p>排行榜可以使用&lt;/p>
+&lt;h2 id="缓存读写策略">缓存读写策略
+&lt;/h2>&lt;h3 id="cache-aside-pattern旁路缓存模式">Cache Aside Pattern（旁路缓存模式）
+&lt;/h3>&lt;p>Cache Aside Pattern 中服务端需要同时维系 db 和 cache，并且是以 db 的结果为准。&lt;/p>
+&lt;p>写入：&lt;/p>
+&lt;ol>
+&lt;li>更新 db&lt;/li>
+&lt;li>删除 cache&lt;/li>
+&lt;/ol>
+&lt;p>读取：&lt;/p>
+&lt;ol>
+&lt;li>从 cache 中读取数据，读取到直接返回&lt;/li>
+&lt;li>如果从 cache 中读取不到数据，从 db 中读取数据，放入 cache ，然后返回&lt;/li>
+&lt;/ol>
+&lt;p>问题：&lt;/p>
+&lt;p>Q：可以先删除 cache ，再更新 db 吗？&lt;/p>
+&lt;p>A：不能，会有数据一致性问题。如果删除 cache， db 没有更新，又有一个请求进来了，cache 中就有旧数据了，此时更新 db 后，db 和 cache 数据不一致了。&lt;/p>
+&lt;p>Q：写入过程中，先更新 db, 在 删除 cache 就可以保证没有问题了吗？&lt;/p>
+&lt;p>A：不能，理论上还是会有数据一致性问题，但是概率较小，因为 cache 的写入比数据库的写入快的多。&lt;/p>
+&lt;p>两个请求，req1 和 req2, 此时 cache 中没有缓存。req1 请求数据 A -&amp;gt; 同时 req2 请求更新数据 A -&amp;gt; req1 将数据放入 cache。&lt;/p>
+&lt;h3 id="readwrite-through-pattern读写穿透">Read/Write Through Pattern（读写穿透）
+&lt;/h3>&lt;p>Read/Write Through Pattern 中服务端把 cache 视为主要数据存储，从中读取数据并将数据写入其中。cache 服务负责将此数据读取和写入 db，从而减轻了应用程序的职责。&lt;/p>
+&lt;p>写入：&lt;/p>
+&lt;ol>
+&lt;li>先查 cache，cache 中不存在，直接更新 db&lt;/li>
+&lt;li>cache 存在，想更新 cache，然后由 cache 自己去更新 db&lt;/li>
+&lt;/ol>
+&lt;p>读取：&lt;/p>
+&lt;ol>
+&lt;li>先从 cache 中读，存在则直接返回&lt;/li>
+&lt;li>cache 中不存在，cache 去查询 db，写入 cache 中后返回&lt;/li>
+&lt;/ol>
+&lt;h3 id="write-behind-pattern异步缓存写入">Write Behind Pattern（异步缓存写入）
+&lt;/h3>&lt;p>Write Behind Pattern 和 Read/Write Through Pattern 很相似，两者都是由 cache 服务来负责 cache 和 db 的读写。&lt;/p>
+&lt;p>但是，两个又有很大的不同：&lt;/p>
+&lt;ul>
+&lt;li>Read/Write Through 是同步更新 cache 和 db&lt;/li>
+&lt;li>Write Behind 则是只更新 cache ，不直接更新 db，而是改为异步批量的方式来更新 db&lt;/li>
+&lt;/ul>
+&lt;h2 id="如何保证数据一致性延迟双删">如何保证数据一致性（延迟双删）
+&lt;/h2>&lt;p>日常使用的 Cache Aside Pattern（旁路缓存模式）并不能准确的确保数据一致性，如果一致性要求比较高，可以使用一下方案。&lt;/p>
+&lt;p>实现过程：&lt;/p>
+&lt;ol>
+&lt;li>删除 cache&lt;/li>
+&lt;li>更新 db&lt;/li>
+&lt;li>隔一段时间再次删除 cache&lt;/li>
+&lt;/ol>
+&lt;p>其中 &amp;ldquo;3. 隔一段时间再次删除 cache&amp;rdquo; 也有多种实现方式：&lt;/p>
+&lt;ol>
+&lt;li>写入消息队列，利用消息队列实现二次删除（APP -写-&amp;gt; MySQL &amp;amp; APP -写-&amp;gt; MQ -删除-&amp;gt; Redis ）&lt;/li>
+&lt;li>订阅数据库变更日志，再操作缓存(APP -写-&amp;gt; MySQL -Binlog-&amp;gt; Canal -投递-&amp;gt; MQ -删除-&amp;gt; Redis)&lt;/li>
+&lt;/ol>
+&lt;p>问题：第二次删除的延迟时间难以确定，中间的延迟时间其实还是会有 “脏数据” 存在&lt;/p>
+&lt;h2 id="redis-性能优化">Redis 性能优化
+&lt;/h2>&lt;h2 id="redis-问题">Redis 问题
+&lt;/h2>&lt;p>以下 3 个问题本质都是 cache 没有查询到数据，访问数据库，将数据库压崩了。&lt;/p>
+&lt;h3 id="缓存穿透">缓存穿透
+&lt;/h3>&lt;blockquote>
+&lt;p>key 不合理，根本不存在 cache 中，也不存在于 db 中&lt;/p>&lt;/blockquote>
+&lt;p>如：恶意攻击者故意制造大量非法的 key 发起请求，导致大量请求直接落到 db 中，db 中也没有相应数据。也就是大量请求最终直接落到 db 了，给 db 造成了巨大的压力。&lt;/p>
+&lt;p>解决方案：&lt;/p>
+&lt;ol>
+&lt;li>缓存无效 key （如果数据库中查不到，就将查不到的数据也缓存到 redis 中，并设置合适的过期时间）&lt;/li>
+&lt;li>布隆过滤器 （可以快速判断出 key 是否存在于布隆过滤器，如果存在，执行后续查询，如果不存在，数据肯定无效，直接丢弃或者返回业务异常）&lt;/li>
+&lt;li>接口限流 （根据用户或者 IP 信息进行限流，对于频繁的异常访问，使用黑名单机制）&lt;/li>
+&lt;/ol>
+&lt;h3 id="缓存击穿">缓存击穿
+&lt;/h3>&lt;blockquote>
+&lt;p>key 为热点数据，存在 db 中，不存在 cache 中（通常是因为 cache 中的数据过期）&lt;/p>&lt;/blockquote>
+&lt;p>解决办法：&lt;/p>
+&lt;ol>
+&lt;li>永不过期（不推荐）：设置热点数据永不过期或者过期时间比较长&lt;/li>
+&lt;li>提前预热（推荐）：针对热点数据提前预热，将其存入缓存中并设置合理的过期时间比如秒杀场景下的数据在秒杀结束之前不过期&lt;/li>
+&lt;li>加锁（看情况）：在缓存失效后，通过设置互斥锁确保只有一个请求去查询数据库并更新缓存&lt;/li>
+&lt;/ol>
+&lt;h3 id="缓存雪崩">缓存雪崩
+&lt;/h3>&lt;blockquote>
+&lt;p>cache 中的数据同一时间大面积失效，大量请求直达 db&lt;/p>&lt;/blockquote>
+&lt;p>解决办法：&lt;/p>
+&lt;ol>
+&lt;li>设置随机的过期时间（可选）：过期时间可以用固定时间加随机值，这样可以避免大量 key 同时实效&lt;/li>
+&lt;li>提前预热（推荐）：针对热点数据提前预热，将其存入缓存中并设置合理的过期时间比如秒杀场景下的数据在秒杀结束之前不过期&lt;/li>
+&lt;li>持久缓存（看情况）：一般不推荐缓存永不过期，但是针对关键性和变化不频繁的数据，也可以考虑这种方案&lt;/li>
+&lt;/ol>
+&lt;h3 id="如何缓存预热">如何缓存预热
+&lt;/h3>&lt;p>综上可的，缓存预热可以有效解决缓存击穿和缓存雪崩的情况，那么缓存预热应该如何进行呢？&lt;/p>
+&lt;ol>
+&lt;li>使用定时任务，如 xxl-job, 用来定时触发预热逻辑&lt;/li>
+&lt;li>使用消息队列，如 kafka，用来异步的进行缓存预热（将需要预热的数据放入消息队列，由缓存服务消费消息队列中的数据，将对应数据进行缓存）&lt;/li>
+&lt;/ol>
+&lt;h3 id="三种问题的对比">三种问题的对比
+&lt;/h3>&lt;ul>
+&lt;li>缓存穿透中，请求的 key 既不存在于 cache 中，也不存在于 db 中&lt;/li>
+&lt;li>缓存击穿中，请求的 key 对应的是热点数据 ，该数据存在 db 中，但不存在于 cache 中（通常是因为 cache 中的那份数据已经过期）&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;ul>
+&lt;li>缓存击穿导致的原因主要是某个热点数据不存在与缓存中（通常是因为缓存中的那份数据已经过期）&lt;/li>
+&lt;li>缓存雪崩导致的原因是 cache 中的大量或者所有数据失效&lt;/li>
+&lt;/ul></description></item></channel></rss>

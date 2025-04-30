@@ -1,0 +1,372 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="介绍 Docker Compose 服务依赖和健康检查相关知识"><title>Docker Compose 服务依赖和健康检查</title>
+<link rel=canonical href=https://www.lcsk42.com/post/docker-depend-and-health/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Docker Compose 服务依赖和健康检查"><meta property='og:description' content="介绍 Docker Compose 服务依赖和健康检查相关知识"><meta property='og:url' content='https://www.lcsk42.com/post/docker-depend-and-health/'><meta property='og:site_name' content="Lucas's Article"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Docker'><meta property='article:published_time' content='2024-06-01T10:06:34+08:00'><meta property='article:modified_time' content='2024-06-01T10:06:34+08:00'><meta name=twitter:title content="Docker Compose 服务依赖和健康检查"><meta name=twitter:description content="介绍 Docker Compose 服务依赖和健康检查相关知识"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_b46f367e8ae3a2b0.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🫠</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lucas's Article</a></h1><h2 class=site-description>Life is short; meeting you is the best fortune.</h2></div></header><ol class=menu-social><li><a href=https://github.com/lcsk42 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=mailto:lcsk42@gmail.com target=_blank title=Mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=https://x.com/lcsk42 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/about/><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-pagekit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.077 20H7V4h11v14h-5.077"/></svg>
+<span>About</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#概念介绍>概念介绍</a><ol><li><a href=#什么是服务依赖>什么是服务依赖？</a></li><li><a href=#如何使用服务依赖>如何使用服务依赖？</a></li><li><a href=#什么是健康检查>什么是健康检查？</a></li><li><a href=#如何进行健康检查>如何进行健康检查？</a></li><li><a href=#两者的结合>两者的结合？</a></li><li><a href=#如何解决>如何解决？</a></li></ol></li><li><a href=#具体示例>具体示例</a><ol><li><a href=#正常启动日志>正常启动日志</a></li><li><a href=#启动过程分析>启动过程分析</a></li><li><a href=#健康检查失败日志>健康检查失败日志</a></li><li><a href=#失败日志分析>失败日志分析</a></li><li><a href=#如何查看分析错误>如何查看分析错误</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/ops/>Ops</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/docker-depend-and-health/>Docker Compose 服务依赖和健康检查</a></h2><h3 class=article-subtitle>介绍 Docker Compose 服务依赖和健康检查相关知识</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Jun 01, 2024</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>4 minute read</time></div></footer></div></header><section class=article-content><p>介绍 Docker Compose 服务依赖和健康检查相关知识。</p><h2 id=概念介绍>概念介绍</h2><h3 id=什么是服务依赖>什么是服务依赖？</h3><p>服务启动有先后顺序，B 依赖 A，如部署 Service 服务一般需要依赖 Database, 这时我们需要先启动数据库，再启动我们的应用程序。</p><h3 id=如何使用服务依赖>如何使用服务依赖？</h3><p>在 docker-compose.yml 中指定 <code>depends_on</code> 参数可以指定容器的启动顺序，B 服务要晚于 A 服务启动，则需要在 B 服务配置 <code>depends_on</code> A 服务。</p><h3 id=什么是健康检查>什么是健康检查？</h3><p>容器启动后，判断其是否可以正常对外提供服务，不能服务启动了是 <code>up</code> 状态，但是里面的服务一直在报错，这样事实上是启动有问题的，这个就是健康检查。</p><h3 id=如何进行健康检查>如何进行健康检查？</h3><p>容器本身提供的有健康检查，可以在服务启动时，或者 Dockerfile 中指定相关参数, 不过使用更多的还是直接在 docker-compose.yml 中指定。</p><p>服务启动时：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>--health-cmd string              Command to run to check health
+</span></span><span class=line><span class=cl>--health-interval duration       Time between running the check
+</span></span><span class=line><span class=cl>                                <span class=o>(</span>ms<span class=p>|</span>s<span class=p>|</span>m<span class=p>|</span>h<span class=o>)</span> <span class=o>(</span>default 0s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--health-retries int             Consecutive failures needed to
+</span></span><span class=line><span class=cl>                                report unhealthy
+</span></span><span class=line><span class=cl>--health-start-period duration   Start period <span class=k>for</span> the container to
+</span></span><span class=line><span class=cl>                                initialize before starting
+</span></span><span class=line><span class=cl>                                health-retries countdown
+</span></span><span class=line><span class=cl>                                <span class=o>(</span>ms<span class=p>|</span>s<span class=p>|</span>m<span class=p>|</span>h<span class=o>)</span> <span class=o>(</span>default 0s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--health-timeout duration        Maximum <span class=nb>time</span> to allow one check to
+</span></span></code></pre></td></tr></table></div></div><p>Dockerfile 指定：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>HEALTHCHECK <span class=o>[</span>OPTIONS<span class=o>]</span> CMD <span class=nb>command</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The options that can appear before CMD are:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>--interval<span class=o>=</span>DURATION <span class=o>(</span>default: 30s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--timeout<span class=o>=</span>DURATION <span class=o>(</span>default: 30s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--start-period<span class=o>=</span>DURATION <span class=o>(</span>default: 0s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--start-interval<span class=o>=</span>DURATION <span class=o>(</span>default: 5s<span class=o>)</span>
+</span></span><span class=line><span class=cl>--retries<span class=o>=</span>N <span class=o>(</span>default: 3<span class=o>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>docker-compose 方式指定:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>healthcheck:
+</span></span><span class=line><span class=cl>      test: <span class=o>[</span> <span class=s2>&#34;CMD&#34;</span>, <span class=s2>&#34;curl&#34;</span>, <span class=s2>&#34;http://127.0.0.1:8080&#34;</span> <span class=o>]</span>
+</span></span><span class=line><span class=cl>      <span class=c1># healthcheck 间隔时间</span>
+</span></span><span class=line><span class=cl>      interval: 10s
+</span></span><span class=line><span class=cl>      <span class=c1># 执行命令超时时间</span>
+</span></span><span class=line><span class=cl>      timeout: 3s
+</span></span><span class=line><span class=cl>      <span class=c1># 重试次数</span>
+</span></span><span class=line><span class=cl>      retries: <span class=m>5</span>
+</span></span><span class=line><span class=cl>      <span class=c1># 容器启动多久后开始执行 healthcheck</span>
+</span></span><span class=line><span class=cl>      start_period: 10s
+</span></span></code></pre></td></tr></table></div></div><h3 id=两者的结合>两者的结合？</h3><p>我们实际使用中遇到的情况可能是，B 服务依赖 A 服务，但是 A 服务开始启动之后，实际需要耗时一段时间（初始化数据等操作），此时如果直接启动 B 服务，就会报错，所以我们需要在 A 服务启动成功，能对外提供服务时，才开始启动 B 服务。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>异常情况(只使用 depends_on)：B 服务 需要访问 A 服务时，A 服务还在启动中，B 服务报错
+</span></span><span class=line><span class=cl>A  [-----created-----](up)[-----starting-----][-----running-----]
+</span></span><span class=line><span class=cl>B                         [-created-][-starting-][-error-]
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>正确情况: A 服务启动完成后，开始对外提供服务，开始启动 B 服务
+</span></span><span class=line><span class=cl>A  [-----created-----][-----starting-----](healthy)[-----running-----]
+</span></span><span class=line><span class=cl>B                     [-created-]                  [-starting-][-error-]
+</span></span></code></pre></td></tr></table></div></div><h3 id=如何解决>如何解决？</h3><p>在 A 服务中配置健康检查，在 B 服务的服务依赖中配置 A 服务的服务状态为健康。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>serviceA</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>test</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s1>&#39;CMD&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;curl&#39;</span><span class=p>,</span><span class=w> </span><span class=s1>&#39;http://127.0.0.1:8080&#39;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>timeout</span><span class=p>:</span><span class=w> </span><span class=l>3s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>retries</span><span class=p>:</span><span class=w> </span><span class=m>5</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>start_period</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>serviceB</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>depends_on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>serviceA</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>condition</span><span class=p>:</span><span class=w> </span><span class=l>service_healthy</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=具体示例>具体示例</h2><blockquote><p><strong>请注意</strong>：此文件仅作为测试使用，无实际意义。</p></blockquote><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>docker-compose down
+</span></span><span class=line><span class=cl>cat &gt; docker-compose.yml <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>version: &#39;3.9&#39;
+</span></span></span><span class=line><span class=cl><span class=s>services:
+</span></span></span><span class=line><span class=cl><span class=s>  mysql8:
+</span></span></span><span class=line><span class=cl><span class=s>    image: mysql:8
+</span></span></span><span class=line><span class=cl><span class=s>    environment:
+</span></span></span><span class=line><span class=cl><span class=s>      - MYSQL_ROOT_PASSWORD=lucas
+</span></span></span><span class=line><span class=cl><span class=s>    healthcheck:
+</span></span></span><span class=line><span class=cl><span class=s>      test:
+</span></span></span><span class=line><span class=cl><span class=s>        [
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;CMD&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;mysql&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;-u&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;root&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;-plucas&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;-e&#34;,
+</span></span></span><span class=line><span class=cl><span class=s>          &#34;select 1&#34;
+</span></span></span><span class=line><span class=cl><span class=s>        ]
+</span></span></span><span class=line><span class=cl><span class=s>      interval: 10s
+</span></span></span><span class=line><span class=cl><span class=s>      timeout: 3s
+</span></span></span><span class=line><span class=cl><span class=s>      retries: 5
+</span></span></span><span class=line><span class=cl><span class=s>      start_period: 10s
+</span></span></span><span class=line><span class=cl><span class=s>  tomcat9:
+</span></span></span><span class=line><span class=cl><span class=s>    image: tomcat:9
+</span></span></span><span class=line><span class=cl><span class=s>    depends_on:
+</span></span></span><span class=line><span class=cl><span class=s>      mysql8:
+</span></span></span><span class=line><span class=cl><span class=s>        condition: service_healthy
+</span></span></span><span class=line><span class=cl><span class=s>    healthcheck:
+</span></span></span><span class=line><span class=cl><span class=s>      test: [ &#34;CMD&#34;, &#34;curl&#34;, &#34;http://127.0.0.1:8080&#34; ]
+</span></span></span><span class=line><span class=cl><span class=s>      interval: 10s
+</span></span></span><span class=line><span class=cl><span class=s>      timeout: 3s
+</span></span></span><span class=line><span class=cl><span class=s>      retries: 5
+</span></span></span><span class=line><span class=cl><span class=s>      start_period: 10s
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker-compose up -d
+</span></span></code></pre></td></tr></table></div></div><h3 id=正常启动日志>正常启动日志</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>[</span>+<span class=o>]</span> Running 0/3
+</span></span><span class=line><span class=cl> ⠇ Network docker_default      Created                                                                                                                     1.9s
+</span></span><span class=line><span class=cl> ⠇ Container docker-mysql8-1   Waiting                                                                                                                     1.9s
+</span></span><span class=line><span class=cl> ⠇ Container docker-tomcat9-1  Created
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>[</span>+<span class=o>]</span> Running 2/3
+</span></span><span class=line><span class=cl> ⠹ Network docker_default      Created                                                                                                                    11.2s
+</span></span><span class=line><span class=cl> ✔ Container docker-mysql8-1   Healthy                                                                                                                    10.9s
+</span></span><span class=line><span class=cl> ✔ Container docker-tomcat9-1  Started                                                                                                                    11.1s
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>❯ docker ps
+</span></span><span class=line><span class=cl>CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                            PORTS                 NAMES
+</span></span><span class=line><span class=cl>33036c106e99   tomcat:9   <span class=s2>&#34;catalina.sh run&#34;</span>        <span class=m>16</span> seconds ago   Up <span class=m>5</span> seconds <span class=o>(</span>health: starting<span class=o>)</span>   8080/tcp              docker-tomcat9-1
+</span></span><span class=line><span class=cl>5f778d7b5c8d   mysql:8    <span class=s2>&#34;docker-entrypoint.s…&#34;</span>   <span class=m>16</span> seconds ago   Up <span class=m>15</span> seconds <span class=o>(</span>healthy<span class=o>)</span>           3306/tcp, 33060/tcp   docker-mysql8-1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>❯ docker ps
+</span></span><span class=line><span class=cl>CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS                    PORTS                 NAMES
+</span></span><span class=line><span class=cl>33036c106e99   tomcat:9   <span class=s2>&#34;catalina.sh run&#34;</span>        <span class=m>22</span> seconds ago   Up <span class=m>11</span> seconds <span class=o>(</span>healthy<span class=o>)</span>   8080/tcp              docker-tomcat9-1
+</span></span><span class=line><span class=cl>5f778d7b5c8d   mysql:8    <span class=s2>&#34;docker-entrypoint.s…&#34;</span>   <span class=m>22</span> seconds ago   Up <span class=m>22</span> seconds <span class=o>(</span>healthy<span class=o>)</span>   3306/tcp, 33060/tcp   docker-mysql8-1
+</span></span></code></pre></td></tr></table></div></div><h3 id=启动过程分析>启动过程分析</h3><ol><li>刚开始启动时，docker-mysql8-1 在 <code>Waiting</code> 中。等待启动后的服务检查，docker-tomcat9-1 处于 <code>Created</code> (容器创建了，再等待启动)</li><li>docker-mysql8-1 状态为 <code>Healthy</code>(启动成功，健康检查正常)，此时 docker-tomcat9-1 开始启动</li><li>刚开始查看服务状态时，docker-tomcat9-1 服务的 <code>STATUS</code> 为 (<code>health: starting</code>)</li><li>过了一段时间后，docker-tomcat9-1 服务的 <code>STATUS</code> 变为 (<code>health</code>)</li></ol><h3 id=健康检查失败日志>健康检查失败日志</h3><p>我们修改 mysql 的健康检查语句，使其执行失败，查看如果健康检查失败会是什么结果</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-diff data-lang=diff><span class=line><span class=cl>[dependencies.bevy]
+</span></span><span class=line><span class=cl>docker-compose.yml
+</span></span><span class=line><span class=cl><span class=gd>-          &#34;-plucas&#34;,
+</span></span></span><span class=line><span class=cl><span class=gd></span><span class=gi>+          &#34;-perrorpassword&#34;,
+</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=o>[</span>+<span class=o>]</span> Running 1/3
+</span></span><span class=line><span class=cl> ⠧ Network docker_default      Created                                                                                                                    50.8s
+</span></span><span class=line><span class=cl> ✘ Container docker-mysql8-1   Error                                                                                                                      50.7s
+</span></span><span class=line><span class=cl> ⠧ Container docker-tomcat9-1  Created                                                                                                                    50.7s
+</span></span><span class=line><span class=cl>dependency failed to start: container docker-mysql8-1 is unhealthy
+</span></span><span class=line><span class=cl>❯ docker ps
+</span></span><span class=line><span class=cl>CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS                 NAMES
+</span></span><span class=line><span class=cl>868b161494b0   mysql:8   <span class=s2>&#34;docker-entrypoint.s…&#34;</span>   <span class=m>57</span> seconds ago   Up <span class=m>57</span> seconds <span class=o>(</span>unhealthy<span class=o>)</span>   3306/tcp, 33060/tcp   docker-mysql8-1
+</span></span><span class=line><span class=cl>❯ docker ps -a
+</span></span><span class=line><span class=cl>CONTAINER ID   IMAGE      COMMAND                  CREATED              STATUS                          PORTS                 NAMES
+</span></span><span class=line><span class=cl>52c90d95d7e9   tomcat:9   <span class=s2>&#34;catalina.sh run&#34;</span>        About a minute ago   Created                                               docker-tomcat9-1
+</span></span><span class=line><span class=cl>868b161494b0   mysql:8    <span class=s2>&#34;docker-entrypoint.s…&#34;</span>   About a minute ago   Up About a minute <span class=o>(</span>unhealthy<span class=o>)</span>   3306/tcp, 33060/tcp   docker-mysql8-1
+</span></span></code></pre></td></tr></table></div></div><h3 id=失败日志分析>失败日志分析</h3><ol><li>首先启动时，docker-tomcat9-1 一直在等待，docker-mysql8-1 最终创建失败，耗时 50s (<code>interval 10s</code> * <code>retries 5</code>) 左右</li><li>使用 docker ps -a 可以查看所有的容器状态，可以看到 docker-mysql8-1 为 <code>unhealthy</code>, docker-tomcat9-1 为 <code>Created</code> 并未启动</li></ol><h3 id=如何查看分析错误>如何查看分析错误</h3><p>使用 docker 的 <code>inspect</code> 命令, 在 <code>State.Health.Log</code> 中可以看到相关错误信息。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>❯ docker inspect docker-mysql8-1
+</span></span><span class=line><span class=cl><span class=o>[</span>
+</span></span><span class=line><span class=cl>    <span class=o>{</span>
+</span></span><span class=line><span class=cl>        ...
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;State&#34;</span>: <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Status&#34;</span>: <span class=s2>&#34;running&#34;</span>,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Running&#34;</span>: true,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Paused&#34;</span>: false,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Restarting&#34;</span>: false,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;OOMKilled&#34;</span>: false,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Dead&#34;</span>: false,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Pid&#34;</span>: 35046,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;ExitCode&#34;</span>: 0,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Error&#34;</span>: <span class=s2>&#34;&#34;</span>,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;StartedAt&#34;</span>: <span class=s2>&#34;2024-05-31T18:13:03.413731054Z&#34;</span>,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;FinishedAt&#34;</span>: <span class=s2>&#34;0001-01-01T00:00:00Z&#34;</span>,
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;Health&#34;</span>: <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;Status&#34;</span>: <span class=s2>&#34;unhealthy&#34;</span>,
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;FailingStreak&#34;</span>: 39,
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;Log&#34;</span>: <span class=o>[</span>
+</span></span><span class=line><span class=cl>                    <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Start&#34;</span>: <span class=s2>&#34;2024-06-01T02:18:54.821003238+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;End&#34;</span>: <span class=s2>&#34;2024-06-01T02:18:54.860412275+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;ExitCode&#34;</span>: 1,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Output&#34;</span>: <span class=s2>&#34;mysql: [Warning] Using a password on the command line interface can be insecure.\nERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)\n&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>,
+</span></span><span class=line><span class=cl>                    <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Start&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:04.862050738+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;End&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:04.905490712+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;ExitCode&#34;</span>: 1,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Output&#34;</span>: <span class=s2>&#34;mysql: [Warning] Using a password on the command line interface can be insecure.\nERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)\n&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>,
+</span></span><span class=line><span class=cl>                    <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Start&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:14.907068839+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;End&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:14.941198241+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;ExitCode&#34;</span>: 1,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Output&#34;</span>: <span class=s2>&#34;mysql: [Warning] Using a password on the command line interface can be insecure.\nERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)\n&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>,
+</span></span><span class=line><span class=cl>                    <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Start&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:24.94265745+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;End&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:24.980647633+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;ExitCode&#34;</span>: 1,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Output&#34;</span>: <span class=s2>&#34;mysql: [Warning] Using a password on the command line interface can be insecure.\nERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)\n&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>,
+</span></span><span class=line><span class=cl>                    <span class=o>{</span>
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Start&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:34.983078462+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;End&#34;</span>: <span class=s2>&#34;2024-06-01T02:19:35.023463408+08:00&#34;</span>,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;ExitCode&#34;</span>: 1,
+</span></span><span class=line><span class=cl>                        <span class=s2>&#34;Output&#34;</span>: <span class=s2>&#34;mysql: [Warning] Using a password on the command line interface can be insecure.\nERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: YES)\n&#34;</span>
+</span></span><span class=line><span class=cl>                    <span class=o>}</span>
+</span></span><span class=line><span class=cl>                <span class=o>]</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>,
+</span></span><span class=line><span class=cl>        ...
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>]</span>
+</span></span></code></pre></td></tr></table></div></div></section><footer class=article-footer><section class=article-tags><a href=/tags/docker/>Docker</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/macos-setup/><div class=article-details><h2 class=article-title>Macos Setup</h2></div></a></article><article><a href=/post/software-list/><div class=article-details><h2 class=article-title>软件列表</h2></div></a></article><article><a href=/post/deployment-configs/><div class=article-details><h2 class=article-title>服务器服务管理</h2></div></a></article><article><a href=/post/arthas/><div class=article-details><h2 class=article-title>Arthas</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Lucas's Article</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

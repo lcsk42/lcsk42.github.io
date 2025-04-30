@@ -1,0 +1,617 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="CompletableFuture 介绍"><title>CompletableFuture</title>
+<link rel=canonical href=https://www.lcsk42.com/post/completable-future/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="CompletableFuture"><meta property='og:description' content="CompletableFuture 介绍"><meta property='og:url' content='https://www.lcsk42.com/post/completable-future/'><meta property='og:site_name' content="Lucas's Article"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Java'><meta property='article:tag' content='Thread'><meta property='article:published_time' content='2025-04-23T15:26:47+08:00'><meta property='article:modified_time' content='2025-04-23T15:26:47+08:00'><meta name=twitter:title content="CompletableFuture"><meta name=twitter:description content="CompletableFuture 介绍"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_b46f367e8ae3a2b0.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🫠</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lucas's Article</a></h1><h2 class=site-description>Life is short; meeting you is the best fortune.</h2></div></header><ol class=menu-social><li><a href=https://github.com/lcsk42 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=mailto:lcsk42@gmail.com target=_blank title=Mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=https://x.com/lcsk42 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/about/><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-pagekit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.077 20H7V4h11v14h-5.077"/></svg>
+<span>About</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#为什么会冒出个-completablefuture>为什么会冒出个 CompletableFuture</a></li><li><a href=#completablefuture-的方法>CompletableFuture 的方法</a><ol><li><a href=#创建方法>创建方法</a></li><li><a href=#结果处理对比>结果处理对比</a><ol><li><a href=#转换类方法>转换类方法</a></li><li><a href=#消费类方法>消费类方法</a></li></ol></li><li><a href=#组合方法对比>组合方法对比</a><ol><li><a href=#双-future-组合>双 Future 组合</a></li><li><a href=#多-future-组合>多 Future 组合</a></li></ol></li><li><a href=#异常处理对比>异常处理对比</a></li></ol></li><li><a href=#总结>总结</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/dev/>Dev</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/completable-future/>CompletableFuture</a></h2><h3 class=article-subtitle>CompletableFuture 介绍</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Apr 23, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>5 minute read</time></div></footer></div></header><section class=article-content><p><code>CompletableFuture</code> 是 Java 8 引入的增强版异步编程工具，它在 <code>Future</code> 的基础上做了重大改进，用于更优雅、更灵活地处理异步任务、回调链式操作、组合多个异步任务等。</p><h2 id=为什么会冒出个-completablefuture>为什么会冒出个 CompletableFuture</h2><p>先来回答一个关键问题：为什么会有 <code>CompletableFuture</code>？既然 Java 专门搞了这么个新工具，肯定是因为老的方式不够好用，甚至在实际开发中会让人抓狂。</p><p>在 Java 8 之前，我们处理异步任务主要靠 <code>Future</code> 接口，比如在线程池中提交一个任务，代码大概是这样的：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>Future</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>future</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>executor</span><span class=p>.</span><span class=na>submit</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=s>&#34;hello&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>String</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>future</span><span class=p>.</span><span class=na>get</span><span class=p>();</span><span class=w> </span><span class=c1>// 阻塞等待结果</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>看着挺朴素的代码，其实问题不少：</p><ol><li><strong>get() 是阻塞的</strong>：任务没执行完，调用方就只能干等，完全不是我们想要的“异步”</li><li><strong>没有回调机制</strong>：任务完成之后，不能自动触发后续操作，只能主动去问它“你好了没”</li><li><strong>不能链式组合多个异步任务</strong>：比如 A 完成后继续执行 B，Future 根本做不到</li><li><strong>异常处理很笨重</strong>：要靠开发者自己 try-catch，还没法像流水线一样优雅地传递异常</li><li><strong>没法聚合多个 Future 的结果</strong>：比如等 A 和 B 都完成后再执行 C？不好意思，不支持</li></ol><p>于是，Java 8 推出了 <code>CompletableFuture</code>，一次对异步能力的全面升级。从命名上就能看出它的野心：这是一个可以“被主动完成”的未来，不再是等待，而是掌控。</p><p>它不仅支持非阻塞调用，还有完善的回调机制、链式任务组合、异常处理流转，以及多个任务的聚合能力。</p><p>简而言之，<code>CompletableFuture</code> 把异步这件事，从“能用”提升到了“好用”，不止是更强大，而是更适合写出清晰、优雅、可维护的异步代码。</p><h2 id=completablefuture-的方法>CompletableFuture 的方法</h2><p><code>CompletableFuture</code> 对象的方法非常非常多，如何了解和记忆是个老大难了，这里推荐使用分组、对比的方式进行记忆。</p><h3 id=创建方法>创建方法</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建一个已完成的 Future</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>completedFuture</span><span class=p>(</span><span class=n>U</span><span class=w> </span><span class=n>value</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 无返回值、默认线程池（ForkJoinPool.commonPool()）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>runAsync</span><span class=p>(</span><span class=n>Runnable</span><span class=w> </span><span class=n>runnable</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 无返回值、自定义线程池</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>runAsync</span><span class=p>(</span><span class=n>Runnable</span><span class=w> </span><span class=n>runnable</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                               </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 有返回值、默认线程池（ForkJoinPool.commonPool()）</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>supplyAsync</span><span class=p>(</span><span class=n>Supplier</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplier</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 有返回值、自定义线程池</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>supplyAsync</span><span class=p>(</span><span class=n>Supplier</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplier</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                                   </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>completedFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>.</span><span class=na>completedFuture</span><span class=p>(</span><span class=s>&#34;CompletableFuture (with the given value)&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=n>runAsyncFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>runAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Running async task (with default executor)&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=n>runAsyncFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>runAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Running async task with custom executor&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>},</span><span class=w> </span><span class=n>executor</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplyAsyncFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Result of the computation (with default executor)&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplyAsyncFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Result of the computation with custom executor&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>},</span><span class=w> </span><span class=n>executor</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=结果处理对比>结果处理对比</h3><h4 id=转换类方法>转换类方法</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 同步转换结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenApply</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步转换结果(默认线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenApplyAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步转换结果(指定线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenApplyAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>,</span><span class=w> </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>lengthFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenApply</span><span class=p>(</span><span class=n>s</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>s</span><span class=p>.</span><span class=na>length</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>lengthFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenApplyAsync</span><span class=p>(</span><span class=n>s</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>s</span><span class=p>.</span><span class=na>length</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Integer</span><span class=o>&gt;</span><span class=w> </span><span class=n>lengthFuture</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenApplyAsync</span><span class=p>(</span><span class=n>s</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>s</span><span class=p>.</span><span class=na>length</span><span class=p>(),</span><span class=w> </span><span class=n>executor</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=消费类方法>消费类方法</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 同步消费结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAccept</span><span class=p>(</span><span class=n>Consumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步消费结果(默认线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAcceptAsync</span><span class=p>(</span><span class=n>Consumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步消费结果(指定线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAcceptAsync</span><span class=p>(</span><span class=n>Consumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                                </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 同步执行无参操作</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenRun</span><span class=p>(</span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步执行无参操作(默认线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenRunAsync</span><span class=p>(</span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 异步执行无参操作(指定线程池)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenRunAsync</span><span class=p>(</span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                            </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenAccept</span><span class=p>(</span><span class=n>result</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Received: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>result</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenAcceptAsync</span><span class=p>(</span><span class=n>result</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Received: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>result</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenAcceptAsync</span><span class=p>(</span><span class=n>result</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Received: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>result</span><span class=p>),</span><span class=w> </span><span class=n>executor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenRun</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Task completed&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenRunAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Task completed&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture</span><span class=p>.</span><span class=na>thenRunAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Task completed&#34;</span><span class=p>),</span><span class=w> </span><span class=n>executor</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=组合方法对比>组合方法对比</h3><h4 id=双-future-组合>双 Future 组合</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 合并两个结果，并返回新的 CompletableFuture</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenCompose</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>CompletionStage</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenComposeAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>CompletionStage</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenComposeAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>CompletionStage</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 消费两个 Future 的结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAcceptBoth</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletionStage</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAcceptBothAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletionStage</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>thenAcceptBothAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletionStage</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>,</span><span class=w> </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 两个都完成后执行操作</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>runAfterBoth</span><span class=p>(</span><span class=n>CompletionStage</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                            </span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>runAfterBothAsync</span><span class=p>(</span><span class=n>CompletionStage</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                                  </span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>runAfterBothAsync</span><span class=p>(</span><span class=n>CompletionStage</span><span class=o>&lt;?&gt;</span><span class=w> </span><span class=n>other</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                                  </span><span class=n>Runnable</span><span class=w> </span><span class=n>action</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>                                                  </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplyAsyncFuture1</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=s>&#34;R1&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>supplyAsyncFuture2</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=s>&#34;R2&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>result</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>supplyAsyncFuture1</span><span class=p>.</span><span class=na>thenCombine</span><span class=p>(</span><span class=n>supplyAsyncFuture2</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>(</span><span class=n>r1</span><span class=p>,</span><span class=w> </span><span class=n>r2</span><span class=p>)</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>String</span><span class=p>.</span><span class=na>format</span><span class=p>(</span><span class=s>&#34;%s | %s&#34;</span><span class=p>,</span><span class=w> </span><span class=n>r1</span><span class=p>,</span><span class=w> </span><span class=n>r2</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>result</span><span class=p>.</span><span class=na>thenAccept</span><span class=p>(</span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>::</span><span class=n>println</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>supplyAsyncFuture1</span><span class=p>.</span><span class=na>thenAcceptBoth</span><span class=p>(</span><span class=n>supplyAsyncFuture2</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>(</span><span class=n>r1</span><span class=p>,</span><span class=w> </span><span class=n>r2</span><span class=p>)</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;%s | %s&#34;</span><span class=p>,</span><span class=w> </span><span class=n>r1</span><span class=p>,</span><span class=w> </span><span class=n>r2</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>runAsyncFuture1</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>runAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;run task 1&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>runAsyncFuture2</span><span class=w> </span><span class=o>=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>runAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;run task 2&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>runAsyncFuture1</span><span class=p>.</span><span class=na>runAfterBoth</span><span class=p>(</span><span class=n>runAsyncFuture2</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=p>()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;run task. &#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=多-future-组合>多 Future 组合</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 所有 Future 完成后完成</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=nf>allOf</span><span class=p>(</span><span class=n>CompletableFuture</span><span class=o>&lt;?&gt;</span><span class=p>...</span><span class=w> </span><span class=n>cfs</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 任意一个 Future 完成后完成</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Object</span><span class=o>&gt;</span><span class=w> </span><span class=nf>anyOf</span><span class=p>(</span><span class=n>CompletableFuture</span><span class=o>&lt;?&gt;</span><span class=p>...</span><span class=w> </span><span class=n>cfs</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 创建三个异步任务</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>task1</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=s>&#34;R1&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>task2</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=s>&#34;R2&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>task3</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=s>&#34;R3&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 等待所有任务完成</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Void</span><span class=o>&gt;</span><span class=w> </span><span class=n>allFutures</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>allOf</span><span class=p>(</span><span class=n>task1</span><span class=p>,</span><span class=w> </span><span class=n>task2</span><span class=p>,</span><span class=w> </span><span class=n>task3</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 所有完成后获取结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>allFutures</span><span class=p>.</span><span class=na>thenRun</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>try</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;T1 Result: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>task1</span><span class=p>.</span><span class=na>get</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;T2 Result: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>task2</span><span class=p>.</span><span class=na>get</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;T3 Result: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>task3</span><span class=p>.</span><span class=na>get</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>catch</span><span class=w> </span><span class=p>(</span><span class=n>Exception</span><span class=w> </span><span class=n>e</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>e</span><span class=p>.</span><span class=na>printStackTrace</span><span class=p>();</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 模拟不同响应时间的服务</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>fastService</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>sleep</span><span class=p>(</span><span class=n>100</span><span class=p>);</span><span class=w> </span><span class=c1>// 模拟100ms延迟</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Fast service response&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>mediumService</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>sleep</span><span class=p>(</span><span class=n>300</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Medium service response&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>String</span><span class=o>&gt;</span><span class=w> </span><span class=n>slowService</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>sleep</span><span class=p>(</span><span class=n>500</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Slow service response&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 获取最先响应的服务</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>Object</span><span class=o>&gt;</span><span class=w> </span><span class=n>firstResponse</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>anyOf</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>fastService</span><span class=p>,</span><span class=w> </span><span class=n>mediumService</span><span class=p>,</span><span class=w> </span><span class=n>slowService</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>firstResponse</span><span class=p>.</span><span class=na>thenAccept</span><span class=p>(</span><span class=n>result</span><span class=w> </span><span class=o>-&gt;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;The first results: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>result</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 可能输出: &#34;The first results: Fast service response&#34;</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=异常处理对比>异常处理对比</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 捕获异常并返回默认值</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nf>exceptionally</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>Function</span><span class=o>&lt;</span><span class=n>Throwable</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 无论成功失败都会执行</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>handle</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiFunction</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Throwable</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>handleAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiFunction</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Throwable</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=nf>handleAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiFunction</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=n>Throwable</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>U</span><span class=o>&gt;</span><span class=w> </span><span class=n>fn</span><span class=p>,</span><span class=w> </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=c1>// 无论成功失败都会执行，不影响结果</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nf>whenComplete</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>Throwable</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nf>whenCompleteAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>Throwable</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>public</span><span class=w> </span><span class=n>CompletableFuture</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span><span class=w> </span><span class=nf>whenCompleteAsync</span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>BiConsumer</span><span class=o>&lt;?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>T</span><span class=p>,</span><span class=w> </span><span class=o>?</span><span class=w> </span><span class=kd>super</span><span class=w> </span><span class=n>Throwable</span><span class=o>&gt;</span><span class=w> </span><span class=n>action</span><span class=p>,</span><span class=w> </span><span class=n>Executor</span><span class=w> </span><span class=n>executor</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>示例：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>Math</span><span class=p>.</span><span class=na>random</span><span class=p>()</span><span class=w> </span><span class=o>&gt;</span><span class=w> </span><span class=n>0</span><span class=p>.</span><span class=na>5</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>RuntimeException</span><span class=p>(</span><span class=s>&#34;Error&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Success&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>.</span><span class=na>exceptionally</span><span class=p>(</span><span class=n>ex</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&#34;Exception: &#34;</span><span class=w> </span><span class=o>+</span><span class=w> </span><span class=n>ex</span><span class=p>.</span><span class=na>getMessage</span><span class=p>());</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Recovered&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>.</span><span class=na>thenAccept</span><span class=p>(</span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>::</span><span class=n>println</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Result&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>.</span><span class=na>handle</span><span class=p>((</span><span class=n>result</span><span class=p>,</span><span class=w> </span><span class=n>ex</span><span class=p>)</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>ex</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Default value&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=n>result</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>});</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=n>CompletableFuture</span><span class=p>.</span><span class=na>supplyAsync</span><span class=p>(()</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=k>new</span><span class=w> </span><span class=n>Random</span><span class=p>().</span><span class=na>nextBoolean</span><span class=p>())</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=k>throw</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>RuntimeException</span><span class=p>(</span><span class=s>&#34;Error&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>return</span><span class=w> </span><span class=s>&#34;Success&#34;</span><span class=p>;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>.</span><span class=na>whenComplete</span><span class=p>((</span><span class=n>result</span><span class=p>,</span><span class=w> </span><span class=n>ex</span><span class=p>)</span><span class=w> </span><span class=o>-&gt;</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=k>if</span><span class=w> </span><span class=p>(</span><span class=n>ex</span><span class=w> </span><span class=o>!=</span><span class=w> </span><span class=kc>null</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>log</span><span class=p>.</span><span class=na>error</span><span class=p>(</span><span class=s>&#34;Error&#34;</span><span class=p>,</span><span class=w> </span><span class=n>ex</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>metrics</span><span class=p>.</span><span class=na>increment</span><span class=p>(</span><span class=s>&#34;failures&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w> </span><span class=k>else</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>log</span><span class=p>.</span><span class=na>info</span><span class=p>(</span><span class=s>&#34;Result: {}&#34;</span><span class=p>,</span><span class=w> </span><span class=n>result</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=n>metrics</span><span class=p>.</span><span class=na>increment</span><span class=p>(</span><span class=s>&#34;success&#34;</span><span class=p>);</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>.</span><span class=na>thenAccept</span><span class=p>(</span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>::</span><span class=n>println</span><span class=p>);</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h2 id=总结>总结</h2><ol><li><p>方法名中的 <code>Async</code> 后缀，代表异步执行</p></li><li><p>参数列表中的 <code>Executor</code> 表示可以自定义线程池，如果不自定义，则使用默认线程池(<code>ForkJoinPool.commonPool()</code>)</p></li><li><p>创建阶段的两个方法：<code>[run|supply](Async)</code></p><ul><li><code>run</code>: 无返回值</li><li><code>supple</code>: 有返回值</li></ul></li><li><p>结果处理阶段三个关键字 <code>then[Apply|Accept|Run](Async)</code></p><ul><li><code>apply</code>: <code>Function&lt;T,R></code> 接收一个参数，处理后返回结果</li><li><code>accept</code>: <code>Consumer&lt;T></code> 接收一个参数，不返回</li><li><code>run</code>: <code>Runnable</code> 不接受参数，不返回</li></ul></li><li><p>组合多个分为两类，两个组合和多个组合</p><ul><li><p>两个组合 <code>then[Compose|AcceptBoth](Async)</code> 和 <code>runAfterBoth(Async)</code></p><ul><li><code>compose</code>: <code>Function&lt;T,R></code> 合并两个结果，处理后返回结果</li><li><code>acceptBoth</code>: <code>BiConsumer&lt;T, U></code> 消费两个结果，不返回</li><li><code>runAfterBoth</code>: <code>Runnable</code> 不接受参数，不返回</li></ul></li><li><p>多个组合 <code>[all|any]Of</code></p><ul><li><code>all</code>: 所有 Future 完成后完成</li><li><code>any</code>: 任意一个 Future 完成后完成</li></ul></li></ul></li><li><p>异常处理分为三部分 <code>exceptionally</code> <code>handle(Async)</code> 和 <code>whenComplete(Async)</code></p><ul><li><code>exceptionally</code>: <code>Function&lt;Throwable, T></code> 接收异常为参数，处理后返回一个值</li><li><code>handle</code>: <code>BiFunction&lt;T, Throwable, U></code> 可以得到异常和结果后，重新返回一个结果</li><li><code>whenComplete</code>: <code>BiConsumer&lt;T, Throwable></code> 可以得到异常和返回值，不对结果进行处理</li></ul></li><li><p>注意： <code>handle</code> 和 <code>whenComplete</code> 比较特殊，无论是否发生异常，都会处理（类似 <code>finally</code>)</p></li></ol></section><footer class=article-footer><section class=article-tags><a href=/tags/java/>Java</a>
+<a href=/tags/thread/>Thread</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/thread-pool/><div class=article-details><h2 class=article-title>Java 线程池</h2></div></a></article><article><a href=/post/spring-boot/><div class=article-details><h2 class=article-title>Spring Boot</h2></div></a></article><article><a href=/post/distributed-lock/><div class=article-details><h2 class=article-title>分布式锁</h2></div></a></article><article><a href=/post/java-microbenchmark-harness/><div class=article-details><h2 class=article-title>Java Microbenchmark Harness</h2></div></a></article><article><a href=/post/rabbitmq/><div class=article-details><h2 class=article-title>RabbitMQ</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Lucas's Article</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

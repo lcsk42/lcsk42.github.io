@@ -1,0 +1,516 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Mac 开发环境与娱乐软件配置"><title>Macos Setup</title>
+<link rel=canonical href=https://www.lcsk42.com/post/macos-setup/><link rel=stylesheet href=/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css><meta property='og:title' content="Macos Setup"><meta property='og:description' content="Mac 开发环境与娱乐软件配置"><meta property='og:url' content='https://www.lcsk42.com/post/macos-setup/'><meta property='og:site_name' content="Lucas's Article"><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Mac'><meta property='article:tag' content='Software'><meta property='article:published_time' content='2025-04-29T15:07:31+08:00'><meta property='article:modified_time' content='2025-04-29T15:07:31+08:00'><meta name=twitter:title content="Macos Setup"><meta name=twitter:description content="Mac 开发环境与娱乐软件配置"><link rel="shortcut icon" href=/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_b46f367e8ae3a2b0.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🫠</span></figure><div class=site-meta><h1 class=site-name><a href=/>Lucas's Article</a></h1><h2 class=site-description>Life is short; meeting you is the best fortune.</h2></div></header><ol class=menu-social><li><a href=https://github.com/lcsk42 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=mailto:lcsk42@gmail.com target=_blank title=Mail rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=https://x.com/lcsk42 target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li><li><a href=/index.xml target=_blank title=RSS rel=me><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-rss"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 19m-1 0a1 1 0 102 0 1 1 0 10-2 0"/><path d="M4 4a16 16 0 0116 16"/><path d="M4 11a9 9 0 019 9"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/about/><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-pagekit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12.077 20H7V4h11v14h-5.077"/></svg>
+<span>About</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#初始化配置>初始化配置</a><ol><li><a href=#鼠标触控板>鼠标触控板</a></li><li><a href=#homebrew-包管理>Homebrew (包管理)</a></li><li><a href=#科学上网>科学上网</a></li><li><a href=#按键映射>按键映射</a></li><li><a href=#鼠标反转>鼠标反转</a></li></ol></li><li><a href=#bash-配置>Bash 配置</a><ol><li><a href=#iterm2>iTerm2</a></li><li><a href=#oh-my-zsh>oh-my-zsh</a></li><li><a href=#p10k>p10k</a></li><li><a href=#dotfile>dotfile</a><ol><li><a href=#gitconfig>.gitconfig</a></li><li><a href=#gitignore_global>.gitignore_global</a></li><li><a href=#tmuxconf>.tmux.conf</a></li></ol></li></ol></li><li><a href=#chrome-配置>Chrome 配置</a><ol><li><a href=#插件>插件</a><ol><li><a href=#aria2-explorer>Aria2 Explorer</a></li><li><a href=#immersive-translate---translate-web--pdf>Immersive Translate - Translate Web & PDF</a></li><li><a href=#proxy-switchyomega-3-zeroomega>Proxy SwitchyOmega 3 (ZeroOmega)</a></li><li><a href=#memo>Memo</a></li><li><a href=#json-formatter>JSON Formatter</a></li><li><a href=#i-still-dont-care-about-cookies>I still don&rsquo;t care about cookies</a></li><li><a href=#biliplus---bilibili-加大杯细节从大杯做起>BiliPlus - Bilibili 加大杯，细节从大杯做起</a></li><li><a href=#b-站空降助手>B 站空降助手</a></li></ol></li><li><a href=#油猴脚本>油猴脚本</a><ol><li><a href=#ac-baidu-google_sogou_bing_redirectremove_favicon_adaway_twoline>AC-baidu-google_sogou_bing_RedirectRemove_favicon_adaway_TwoLine</a></li><li><a href=#endless-google>Endless Google</a></li><li><a href=#auto-skip-youtube-ads>Auto Skip YouTube Ads</a></li><li><a href=#pixiv-plus>Pixiv Plus</a></li></ol></li></ol></li><li><a href=#vs-code-配置>VS Code 配置</a><ol><li><a href=#配置文件>配置文件</a></li><li><a href=#插件-1>插件</a><ol><li><a href=#error-lens>Error lens</a></li><li><a href=#better-comments>Better Comments</a></li><li><a href=#bookmarks>Bookmarks</a></li><li><a href=#code-spell-checker>Code Spell Checker</a></li></ol></li></ol></li><li><a href=#小软件大提升>小软件大提升</a><ol><li><a href=#raycast>Raycast</a></li><li><a href=#bark>Bark</a></li><li><a href=#keepingyouawake>KeepingYouAwake</a></li><li><a href=#runcat>RunCat</a></li><li><a href=#inputsourcepro>InputSourcePro</a></li></ol></li><li><a href=#文件目录定义>文件目录定义</a></li><li><a href=#开发相关>开发相关</a><ol><li><a href=#back-end>Back-end</a><ol><li><a href=#java>Java</a></li></ol></li><li><a href=#front-end>Front-end</a></li></ol></li><li><a href=#沟通娱乐>沟通娱乐</a></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/ops/>Ops</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/macos-setup/>Macos Setup</a></h2><h3 class=article-subtitle>Mac 开发环境与娱乐软件配置</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Apr 29, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>7 minute read</time></div></footer></div></header><section class=article-content><h2 id=初始化配置>初始化配置</h2><h3 id=鼠标触控板>鼠标触控板</h3><ul><li>鼠标速度最大：Setting -> Mouse -> Tracking speed 调整到 Fast</li><li>轻点来点按：Setting -> Trackpad -> Tap to click 打开</li><li>三指拖移：Setting -> Accessibility -> Pointer Control -> Trackpad Options -><ul><li>Use trackpad for dragging: true</li><li>Dragging style: Three Finger Drag</li></ul></li><li>关闭触发角：Setting -> Desktop & Dock -> 最下方右下角 Hot Corners,点开后设置所有为空</li></ul><h3 id=homebrew-包管理>Homebrew (包管理)</h3><p>确实无愧于自己的 slogan - The Missing Package Manager for macOS。</p><p>软件管理必备了已经是。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>/bin/bash -c <span class=s2>&#34;</span><span class=k>$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class=k>)</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>以上命令在国内环境下因为不可抗因素会执行失败，可以尝试使用手机热点进行下载（无需代理），或者也可以直接使用 Gitee 用户提供的代理来安装：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>/bin/zsh -c <span class=s2>&#34;</span><span class=k>$(</span>curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh<span class=k>)</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=科学上网>科学上网</h3><p>网络是个拦路虎，首先需要先安装代理软件，否则只能在百度中看满屏的广告了。</p><p>从 <a class=link href=https://github.com/clash-verge-rev/clash-verge-rev/releases target=_blank rel=noopener>Clash Verge Rev</a> 中下载最新版本，进行安装。</p><p>获取最新版本下载地址之后，如果下载过慢，可以使用资源访问加速服务进行下载：<a class=link href=https:gh.lcsk42.com target=_blank rel=noopener>gh.lcsk42.com</a></p><p>该项目来自 <a class=link href=https://github.com/hunshcn/gh-proxy target=_blank rel=noopener>hunshcn/gh-proxy</a></p><p>对其前端页面进行修改之后，部署在了 <a class=link href=https://workers.cloudflare.com/ target=_blank rel=noopener>Cloudflare Workers</a> 上。</p><p>无限感恩赛博佛祖 Cloudflare。</p><h3 id=按键映射>按键映射</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask karabiner-elements
+</span></span></code></pre></td></tr></table></div></div><p>自定义按键转换，我一般常用的有两个：</p><p>F1: CapsLock 转换为 Ctrl, CapsLock 占用了那么大的位置，但是用处不多（自带的键盘作用还比较多，外接键盘好像确实没有什么用处）。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    &#34;description&#34;: &#34;Press caps_lock to activate as CTRL&#34;,
+</span></span><span class=line><span class=cl>    &#34;manipulators&#34;: [
+</span></span><span class=line><span class=cl>        {
+</span></span><span class=line><span class=cl>            &#34;from&#34;: {
+</span></span><span class=line><span class=cl>                &#34;key_code&#34;: &#34;caps_lock&#34;,
+</span></span><span class=line><span class=cl>                &#34;modifiers&#34;: { &#34;optional&#34;: [&#34;any&#34;] }
+</span></span><span class=line><span class=cl>            },
+</span></span><span class=line><span class=cl>            &#34;to&#34;: [{ &#34;key_code&#34;: &#34;left_control&#34; }],
+</span></span><span class=line><span class=cl>            &#34;type&#34;: &#34;basic&#34;
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><p>F2: 将右 command 键转换为 F19, 主要是方便启动器，一般会把这个键位绑定到 Raycast 上替换 自带的 spotlight。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>{
+</span></span><span class=line><span class=cl>    &#34;description&#34;: &#34;Change right_command key to command+control+option+shift. (Post f19 key when pressed alone)&#34;,
+</span></span><span class=line><span class=cl>    &#34;manipulators&#34;: [
+</span></span><span class=line><span class=cl>        {
+</span></span><span class=line><span class=cl>            &#34;from&#34;: {
+</span></span><span class=line><span class=cl>                &#34;key_code&#34;: &#34;right_command&#34;,
+</span></span><span class=line><span class=cl>                &#34;modifiers&#34;: { &#34;optional&#34;: [&#34;any&#34;] }
+</span></span><span class=line><span class=cl>            },
+</span></span><span class=line><span class=cl>            &#34;to&#34;: [
+</span></span><span class=line><span class=cl>                {
+</span></span><span class=line><span class=cl>                    &#34;key_code&#34;: &#34;left_shift&#34;,
+</span></span><span class=line><span class=cl>                    &#34;modifiers&#34;: [&#34;left_command&#34;, &#34;left_control&#34;, &#34;left_option&#34;]
+</span></span><span class=line><span class=cl>                }
+</span></span><span class=line><span class=cl>            ],
+</span></span><span class=line><span class=cl>            &#34;to_if_alone&#34;: [{ &#34;key_code&#34;: &#34;f19&#34; }],
+</span></span><span class=line><span class=cl>            &#34;type&#34;: &#34;basic&#34;
+</span></span><span class=line><span class=cl>        }
+</span></span><span class=line><span class=cl>    ]
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=鼠标反转>鼠标反转</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask mos
+</span></span></code></pre></td></tr></table></div></div><p>将鼠标滚动方向反转，并保留触控板方向不变。</p><p>Mac 的滚轮逻辑挺反人类的，刚开始尝试适应了一段时间，结果发现并不能适应，感谢 <a class=link href=https://mos.caldis.me/ target=_blank rel=noopener>Mos</a> 救我。</p><h2 id=bash-配置>Bash 配置</h2><h3 id=iterm2>iTerm2</h3><p>仿真终端，替换自带的 Terminal，增加更多的主题和功能。</p><p><a class=link href=https://font.subf.dev/en/ target=_blank rel=noopener>Maple Mono</a> 是最近非常喜欢的一个字体，在代码中大量的看会显得有点乱，但是在终端中使用很完美（可能是因为终端中的数据都比较规整，排排站的原因？）。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask iterm2 font-maple-mono-nf-cn
+</span></span></code></pre></td></tr></table></div></div><p>安装完成后设置字体：</p><p>Setting -> Profiles -> Text -> Font: Maple Mono NF CN Regular 16 100 100</p><h3 id=oh-my-zsh>oh-my-zsh</h3><p>很慢，但是目前暂时没有时间去寻找更好的替代品，所以咬咬牙，先继续使用。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>sh -c <span class=s2>&#34;</span><span class=k>$(</span>curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class=k>)</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果上述命令执行失败，依旧可以尝试国内 Gitee 的代理：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=c1># 进入此页面复制脚本内容，创建文件 install.sh，粘贴进文件：</span>
+</span></span><span class=line><span class=cl>https://gitee.com/mirrors/oh-my-zsh/blob/master/tools/install.sh
+</span></span><span class=line><span class=cl><span class=c1># 替换地址</span>
+</span></span><span class=line><span class=cl>- <span class=nv>REMOTE</span><span class=o>=</span><span class=si>${</span><span class=nv>REMOTE</span><span class=k>:-</span><span class=nv>https</span><span class=p>://github.com/</span><span class=si>${</span><span class=nv>REPO</span><span class=si>}</span><span class=p>.git</span><span class=si>}</span>
+</span></span><span class=line><span class=cl>+ <span class=nv>REMOTE</span><span class=o>=</span><span class=si>${</span><span class=nv>REMOTE</span><span class=k>:-</span><span class=nv>https</span><span class=p>://gitee.com/mirrors/oh-my-zsh.git</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=c1># 增加脚本权限，然后执行脚本即可</span>
+</span></span><span class=line><span class=cl>chmod +x ./install.sh
+</span></span><span class=line><span class=cl>./install.sh
+</span></span></code></pre></td></tr></table></div></div><p>配置文件(.zshrc)：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl># Alias
+</span></span><span class=line><span class=cl>alias vi=vim
+</span></span><span class=line><span class=cl>alias v=vim
+</span></span><span class=line><span class=cl># alias cat=bat
+</span></span><span class=line><span class=cl>alias n=neofetch
+</span></span><span class=line><span class=cl>alias lg=lazygit
+</span></span><span class=line><span class=cl>alias ,o=&#34;open .&#34;
+</span></span><span class=line><span class=cl>alias ,c=&#34;code .&#34;
+</span></span><span class=line><span class=cl>alias sz=&#34;source ~/.zshrc&#34;
+</span></span><span class=line><span class=cl>alias cdtmp=&#39;cd `mktemp -d /tmp/lucas-XXXXXXXX`&#39;
+</span></span><span class=line><span class=cl>alias hosts=&#34;sudo vim /etc/hosts&#34;
+</span></span><span class=line><span class=cl>alias tail=tailspin
+</span></span><span class=line><span class=cl>alias weather=&#34;clear &amp; curl https://v2d.wttr.in/zhengzhou&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>function mcd {
+</span></span><span class=line><span class=cl>  mkdir $1 &amp;&amp; cd $1
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>function ppgrep() {
+</span></span><span class=line><span class=cl>    if [[ $1 == &#34;&#34; ]]; then
+</span></span><span class=line><span class=cl>        FZF=fzf
+</span></span><span class=line><span class=cl>    else
+</span></span><span class=line><span class=cl>        FZF=&#34;fzf -q $1&#34;
+</span></span><span class=line><span class=cl>    fi
+</span></span><span class=line><span class=cl>    ps aux | eval $FZF | awk &#39;{ print $2 }&#39;
+</span></span><span class=line><span class=cl>}
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>function ppkill() {
+</span></span><span class=line><span class=cl>    if [[ $1 =~ &#34;^-&#34; ]]; then
+</span></span><span class=line><span class=cl>        QUERY=&#34;&#34;            # options only
+</span></span><span class=line><span class=cl>    else
+</span></span><span class=line><span class=cl>        QUERY=$1            # with a query
+</span></span><span class=line><span class=cl>        [[ $# &gt; 0 ]] &amp;&amp; shift
+</span></span><span class=line><span class=cl>    fi
+</span></span><span class=line><span class=cl>    ppgrep $QUERY | xargs kill $*
+</span></span><span class=line><span class=cl>}
+</span></span></code></pre></td></tr></table></div></div><h3 id=p10k>p10k</h3><p>也是一个用的比较习惯的主题了。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>git clone --depth<span class=o>=</span><span class=m>1</span> https://github.com/romkatv/powerlevel10k.git <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=nv>$HOME</span><span class=p>/.oh-my-zsh/custom</span><span class=si>}</span><span class=s2>/themes/powerlevel10k&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>国内可以使用以下命令替换</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>git clone --depth<span class=o>=</span><span class=m>1</span> https://gitee.com/romkatv/powerlevel10k.git <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=nv>$HOME</span><span class=p>/.oh-my-zsh/custom</span><span class=si>}</span><span class=s2>/themes/powerlevel10k&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>打开 <code>~/.zshrc</code>,找到 <code>ZSH_THEME</code>, 替换为 <code>powerlevel10k/powerlevel10k</code> 即可。</p><h3 id=dotfile>dotfile</h3><h4 id=gitconfig>.gitconfig</h4><p>个人 git 相关配置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat &gt; ~/.gitconfig <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>[push]
+</span></span></span><span class=line><span class=cl><span class=s>	default = current
+</span></span></span><span class=line><span class=cl><span class=s>	autoSetupRemote = true
+</span></span></span><span class=line><span class=cl><span class=s>[user]
+</span></span></span><span class=line><span class=cl><span class=s>	name = lcsk42
+</span></span></span><span class=line><span class=cl><span class=s>	email = lcsk42@gmail.com
+</span></span></span><span class=line><span class=cl><span class=s>[core]
+</span></span></span><span class=line><span class=cl><span class=s>	pager = diff-so-fancy | less --tabs=4 -RFX
+</span></span></span><span class=line><span class=cl><span class=s>[interactive]
+</span></span></span><span class=line><span class=cl><span class=s>	diffFilter = diff-so-fancy --patch
+</span></span></span><span class=line><span class=cl><span class=s>[color]
+</span></span></span><span class=line><span class=cl><span class=s>	ui = true
+</span></span></span><span class=line><span class=cl><span class=s>[color &#34;diff-highlight&#34;]
+</span></span></span><span class=line><span class=cl><span class=s>	oldNormal = red bold
+</span></span></span><span class=line><span class=cl><span class=s>	oldHighlight = red bold 52
+</span></span></span><span class=line><span class=cl><span class=s>	newNormal = green bold
+</span></span></span><span class=line><span class=cl><span class=s>	newHighlight = green bold 22
+</span></span></span><span class=line><span class=cl><span class=s>[color &#34;diff&#34;]
+</span></span></span><span class=line><span class=cl><span class=s>	meta = 11
+</span></span></span><span class=line><span class=cl><span class=s>	frag = magenta bold
+</span></span></span><span class=line><span class=cl><span class=s>	func = 146 bold
+</span></span></span><span class=line><span class=cl><span class=s>	commit = yellow bold
+</span></span></span><span class=line><span class=cl><span class=s>	old = red bold
+</span></span></span><span class=line><span class=cl><span class=s>	new = green bold
+</span></span></span><span class=line><span class=cl><span class=s>	whitespace = red reverse
+</span></span></span><span class=line><span class=cl><span class=s>[init]
+</span></span></span><span class=line><span class=cl><span class=s>	defaultBranch = main
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=gitignore_global>.gitignore_global</h4><p>全局的 git 忽略类型</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat ~/.gitignore_global <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>*~
+</span></span></span><span class=line><span class=cl><span class=s>.DS_Store
+</span></span></span><span class=line><span class=cl><span class=s>.idea
+</span></span></span><span class=line><span class=cl><span class=s>.vscode
+</span></span></span><span class=line><span class=cl><span class=s>.nvm
+</span></span></span><span class=line><span class=cl><span class=s>target/
+</span></span></span><span class=line><span class=cl><span class=s>*.iml
+</span></span></span><span class=line><span class=cl><span class=s>/out/
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h4 id=tmuxconf>.tmux.conf</h4><p>tmux 基础配置（类 vim）</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat &gt; ~/.tmux.conf <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s># -- general -------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s>set -g default-terminal &#34;screen-256color&#34; # colors!
+</span></span></span><span class=line><span class=cl><span class=s>setw -g xterm-keys on
+</span></span></span><span class=line><span class=cl><span class=s>set -s escape-time 10 # faster command sequences
+</span></span></span><span class=line><span class=cl><span class=s>set -sg repeat-time 600 # increase repeat timeout
+</span></span></span><span class=line><span class=cl><span class=s>set -q -g status-utf8 on # expect UTF-8 (tmux &lt; 2.2)
+</span></span></span><span class=line><span class=cl><span class=s>setw -q -g utf8 on
+</span></span></span><span class=line><span class=cl><span class=s>set -g history-limit 5000 # boost history
+</span></span></span><span class=line><span class=cl><span class=s># -- display -------------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s>set -g base-index 1 # start windows numbering at 1
+</span></span></span><span class=line><span class=cl><span class=s>setw -g pane-base-index 1 # make pane numbering consistent with windows
+</span></span></span><span class=line><span class=cl><span class=s>setw -g automatic-rename on # rename window to reflect current program
+</span></span></span><span class=line><span class=cl><span class=s>set -g renumber-windows on # renumber windows when a window is closed
+</span></span></span><span class=line><span class=cl><span class=s>set -g set-titles on # set terminal title
+</span></span></span><span class=line><span class=cl><span class=s>set -g display-panes-time 800 # slightly longer pane indicators display time
+</span></span></span><span class=line><span class=cl><span class=s>set -g display-time 1000 # slightly longer status messages display time
+</span></span></span><span class=line><span class=cl><span class=s>set -g status-interval 10 # redraw status line every 10 seconds
+</span></span></span><span class=line><span class=cl><span class=s># clear both screen and history
+</span></span></span><span class=line><span class=cl><span class=s>bind -n C-l send-keys C-l \; run &#39;sleep 0.1&#39; \; clear-history
+</span></span></span><span class=line><span class=cl><span class=s># activity
+</span></span></span><span class=line><span class=cl><span class=s>set -g monitor-activity on
+</span></span></span><span class=line><span class=cl><span class=s>set -g visual-activity off
+</span></span></span><span class=line><span class=cl><span class=s># -- nvigation ----------------------------------------------------------------
+</span></span></span><span class=line><span class=cl><span class=s># create session
+</span></span></span><span class=line><span class=cl><span class=s>bind C-c new-session
+</span></span></span><span class=line><span class=cl><span class=s># find session
+</span></span></span><span class=line><span class=cl><span class=s>bind C-f command-prompt -p find-session &#39;switch-client -t %%&#39;
+</span></span></span><span class=line><span class=cl><span class=s># split current window horizontally
+</span></span></span><span class=line><span class=cl><span class=s>bind - split-window -v
+</span></span></span><span class=line><span class=cl><span class=s># split current window vertically
+</span></span></span><span class=line><span class=cl><span class=s>bind _ split-window -h
+</span></span></span><span class=line><span class=cl><span class=s># pane navigation
+</span></span></span><span class=line><span class=cl><span class=s>bind -r h select-pane -L # move left
+</span></span></span><span class=line><span class=cl><span class=s>bind -r j select-pane -D # move down
+</span></span></span><span class=line><span class=cl><span class=s>bind -r k select-pane -U # move up
+</span></span></span><span class=line><span class=cl><span class=s>bind -r l select-pane -R # move right
+</span></span></span><span class=line><span class=cl><span class=s>bind &gt; swap-pane -D # swap current pane with the next one
+</span></span></span><span class=line><span class=cl><span class=s>bind &lt; swap-pane -U # swap current pane with the previous one
+</span></span></span><span class=line><span class=cl><span class=s>#pane resizing
+</span></span></span><span class=line><span class=cl><span class=s>bind -r H resize-pane -L 2
+</span></span></span><span class=line><span class=cl><span class=s>bind -r J resize-pane -D 2
+</span></span></span><span class=line><span class=cl><span class=s>bind -r K resize-pane -U 2
+</span></span></span><span class=line><span class=cl><span class=s>bind -r L resize-pane -R 2
+</span></span></span><span class=line><span class=cl><span class=s># window navigation
+</span></span></span><span class=line><span class=cl><span class=s>unbind n
+</span></span></span><span class=line><span class=cl><span class=s>unbind p
+</span></span></span><span class=line><span class=cl><span class=s>bind -r C-h previous-window # select previous window
+</span></span></span><span class=line><span class=cl><span class=s>bind -r C-l next-window # select next window
+</span></span></span><span class=line><span class=cl><span class=s>bind Tab last-window # move to last active window
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=chrome-配置>Chrome 配置</h2><p>开发必备了，事实上的前端标准，无数的封装，一个用户的电脑中实际安装可能高达几十个的运行环境。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask google-chrome
+</span></span></code></pre></td></tr></table></div></div><p>使用 google 账号进行数据同步。</p><h3 id=插件>插件</h3><h4 id=aria2-explorer>Aria2 Explorer</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/aria2-explorer/mpkodccbngfoacfalldjimigbofkhgjn?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/aria2-explorer/mpkodccbngfoacfalldjimigbofkhgjn?hl=en</a></p><p><strong>功能：</strong> 配合下载软件(aria2c)一起使用</p><p>直接使用打包好的 docker 镜像进行安装：
+<a class=link href=https://p3terx.com/archives/docker-aria2-pro.html target=_blank rel=noopener>Aria2 Pro - 更好用的 Aria2 Docker 容器镜像</a></p><p>参照提供的 <a class=link href=https://github.com/P3TERX/Aria2-Pro-Docker/blob/master/docker-compose.yml target=_blank rel=noopener>docker-compose.yml</a> 示例，根据需要修改如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yml data-lang=yml><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>Aria2-Pro</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>container_name</span><span class=p>:</span><span class=w> </span><span class=l>aria2-pro</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>p3terx/aria2-pro</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>PUID=65534</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>PGID=65534</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>UMASK_SET=022</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>RPC_SECRET=P3TERX</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>RPC_PORT=6800</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>LISTEN_PORT=6888</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>DISK_CACHE=128M</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>IPV6_MODE=false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>UPDATE_TRACKERS=true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>CUSTOM_TRACKER_URL=</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>TZ=Asia/Shanghai</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>${PWD}/aria2-config:/config</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>${HOME}/Downloads:/downloads</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>network_mode</span><span class=p>:</span><span class=w> </span><span class=l>host</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>logging</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>driver</span><span class=p>:</span><span class=w> </span><span class=l>json-file</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>options</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>max-size</span><span class=p>:</span><span class=w> </span><span class=l>1m</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h4 id=immersive-translate---translate-web--pdf>Immersive Translate - Translate Web & PDF</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/immersive-translate-trans/bpoadfkcbjbfhfodiogcnhhhpibjhbnh?hl=en</a></p><p><strong>功能：</strong> 真 - 沉浸式翻译</p><h4 id=proxy-switchyomega-3-zeroomega>Proxy SwitchyOmega 3 (ZeroOmega)</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/proxy-switchyomega-3-zero/pfnededegaaopdmhkdmcofjmoldfiped?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/proxy-switchyomega-3-zero/pfnededegaaopdmhkdmcofjmoldfiped?hl=en</a></p><p><strong>功能：</strong> 处理不同网站之间的代理</p><p><strong>Rule List:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-txt data-lang=txt><span class=line><span class=cl>https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt
+</span></span></code></pre></td></tr></table></div></div><h4 id=memo>Memo</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/memo/chgfencjlhmjhmnnpnlnchglkkdcipii?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/memo/chgfencjlhmjhmnnpnlnchglkkdcipii?hl=en</a></p><p><strong>功能：</strong> 配合 GitHub 仓库，将搜藏的页面存储到一个仓库中</p><h4 id=json-formatter>JSON Formatter</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/json-formatter/bcjindcccaagfpapjjmafapmmgkkhgoa?hl=en</a></p><p><strong>功能：</strong> 格式化 JSON 数据</p><h4 id=i-still-dont-care-about-cookies>I still don&rsquo;t care about cookies</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm?hl=en</a></p><p><strong>功能：</strong> 如题</p><h4 id=biliplus---bilibili-加大杯细节从大杯做起>BiliPlus - Bilibili 加大杯，细节从大杯做起</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/biliplus-bilibili-%E5%8A%A0%E5%A4%A7%E6%9D%AF%EF%BC%8C%E7%BB%86%E8%8A%82%E4%BB%8E/liddcdcjkpeaiblhebgihpmcaknpgbgk?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/biliplus-bilibili-%E5%8A%A0%E5%A4%A7%E6%9D%AF%EF%BC%8C%E7%BB%86%E8%8A%82%E4%BB%8E/liddcdcjkpeaiblhebgihpmcaknpgbgk?hl=en</a></p><p><strong>功能：</strong> B 站优化</p><h4 id=b-站空降助手>B 站空降助手</h4><p><strong>地址：</strong> <a class=link href="https://chromewebstore.google.com/detail/b%E7%AB%99%E7%A9%BA%E9%99%8D%E5%8A%A9%E6%89%8B/eaoelafamejbnggahofapllmfhlhajdd?hl=en" target=_blank rel=noopener>https://chromewebstore.google.com/detail/b%E7%AB%99%E7%A9%BA%E9%99%8D%E5%8A%A9%E6%89%8B/eaoelafamejbnggahofapllmfhlhajdd?hl=en</a></p><p><strong>功能：</strong> B 站优化</p><h3 id=油猴脚本>油猴脚本</h3><h4 id=ac-baidu-google_sogou_bing_redirectremove_favicon_adaway_twoline>AC-baidu-google_sogou_bing_RedirectRemove_favicon_adaway_TwoLine</h4><p><strong>地址:</strong><a class=link href=https://greasyfork.org/en/scripts/14178-ac-baidu-%E9%87%8D%E5%AE%9A%E5%90%91%E4%BC%98%E5%8C%96%E7%99%BE%E5%BA%A6%E6%90%9C%E7%8B%97%E8%B0%B7%E6%AD%8C%E5%BF%85%E5%BA%94%E6%90%9C%E7%B4%A2-favicon-%E5%8F%8C%E5%88%97 target=_blank rel=noopener>https://greasyfork.org/en/scripts/14178-ac-baidu-%E9%87%8D%E5%AE%9A%E5%90%91%E4%BC%98%E5%8C%96%E7%99%BE%E5%BA%A6%E6%90%9C%E7%8B%97%E8%B0%B7%E6%AD%8C%E5%BF%85%E5%BA%94%E6%90%9C%E7%B4%A2-favicon-%E5%8F%8C%E5%88%97</a></p><h4 id=endless-google>Endless Google</h4><p><strong>地址:</strong><a class=link href=https://greasyfork.org/en/scripts/41041-endless-google-fork target=_blank rel=noopener>https://greasyfork.org/en/scripts/41041-endless-google-fork</a></p><h4 id=auto-skip-youtube-ads>Auto Skip YouTube Ads</h4><p><strong>地址:</strong><a class=link href=https://greasyfork.org/en/scripts/498197-auto-skip-youtube-ads target=_blank rel=noopener>https://greasyfork.org/en/scripts/498197-auto-skip-youtube-ads</a></p><h4 id=pixiv-plus>Pixiv Plus</h4><p><strong>地址：</strong><a class=link href=https://greasyfork.org/en/scripts/34153-pixiv-plus target=_blank rel=noopener>https://greasyfork.org/en/scripts/34153-pixiv-plus</a></p><h2 id=vs-code-配置>VS Code 配置</h2><h3 id=配置文件>配置文件</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-json data-lang=json><span class=line><span class=cl><span class=p>{</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.cursorBlinking&#34;</span><span class=p>:</span> <span class=s2>&#34;solid&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.cursorStyle&#34;</span><span class=p>:</span> <span class=s2>&#34;block&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;workbench.colorTheme&#34;</span><span class=p>:</span> <span class=s2>&#34;Default Light+&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.fontFamily&#34;</span><span class=p>:</span> <span class=s2>&#34;&#39;Hack Nerd Font Mono&#39;, Monaco, &#39;Courier New&#39;, monospace&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.fontSize&#34;</span><span class=p>:</span> <span class=mi>18</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.fontLigatures&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.tabSize&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.tabCompletion&#34;</span><span class=p>:</span> <span class=s2>&#34;on&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.renderWhitespace&#34;</span><span class=p>:</span> <span class=s2>&#34;all&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.rulers&#34;</span><span class=p>:</span> <span class=p>[</span><span class=mi>80</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.suggestSelection&#34;</span><span class=p>:</span> <span class=s2>&#34;first&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.wordWrap&#34;</span><span class=p>:</span> <span class=s2>&#34;wordWrapColumn&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.wordWrapColumn&#34;</span><span class=p>:</span> <span class=mi>120</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;editor.bracketPairColorization.independentColorPoolPerBracketType&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;window.restoreWindows&#34;</span><span class=p>:</span> <span class=s2>&#34;none&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;files.autoSave&#34;</span><span class=p>:</span> <span class=s2>&#34;onFocusChange&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;files.defaultLanguage&#34;</span><span class=p>:</span> <span class=s2>&#34;javascript&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;files.trimTrailingWhitespace&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;files.exclude&#34;</span><span class=p>:</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/.git&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/.svn&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/.hg&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/CVS&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/.DS_Store&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/Thumbs.db&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/.gitignore&#34;</span><span class=p>:</span> <span class=kc>true</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&#34;**/package-lock.json&#34;</span><span class=p>:</span> <span class=kc>true</span>
+</span></span><span class=line><span class=cl>  <span class=p>},</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;files.eol&#34;</span><span class=p>:</span> <span class=s2>&#34;\n&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;terminal.external.osxExec&#34;</span><span class=p>:</span> <span class=s2>&#34;iTerm.app&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;terminal.integrated.fontSize&#34;</span><span class=p>:</span> <span class=mi>14</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;terminal.integrated.fontFamily&#34;</span><span class=p>:</span> <span class=s2>&#34;Maple Mono NF CN&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;http.proxy&#34;</span><span class=p>:</span> <span class=s2>&#34;http://127.0.0.1:7890&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>  <span class=nt>&#34;workbench.activityBar.location&#34;</span><span class=p>:</span> <span class=s2>&#34;hidden&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=插件-1>插件</h3><h4 id=error-lens>Error lens</h4><h4 id=better-comments>Better Comments</h4><h4 id=bookmarks>Bookmarks</h4><h4 id=code-spell-checker>Code Spell Checker</h4><h2 id=小软件大提升>小软件大提升</h2><h3 id=raycast>Raycast</h3><p><strong>官网地址:</strong>
+<a class=link href=https://www.raycast.com// target=_blank rel=noopener>https://www.raycast.com//</a></p><p><strong>安装方式:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask raycast
+</span></span></code></pre></td></tr></table></div></div><p><strong>核心功能:</strong>
+软件启动器</p><p><strong>辅助功能:</strong>
+历史剪切板等</p><h3 id=bark>Bark</h3><p><strong>官网地址:</strong>
+<a class=link href=https://bark.day.app/#/ target=_blank rel=noopener>https://bark.day.app/#/</a></p><p><strong>安装方式:</strong>
+App Store 直接安装</p><p><strong>核心功能:</strong>
+消息提醒，基于 Apple 的推送渠道，可以实现不运行软件就可以接受消息</p><h3 id=keepingyouawake>KeepingYouAwake</h3><p><strong>官网地址:</strong>
+<a class=link href=https://keepingyouawake.app/ target=_blank rel=noopener>https://keepingyouawake.app/</a></p><p><strong>安装方式:</strong>
+App Store 直接安装</p><p><strong>核心功能:</strong>
+可以保持屏幕常亮。功能单一但好用。完美的遵循 Unix 哲学中的 KISS(Keep it simple, stupid) 原则</p><h3 id=runcat>RunCat</h3><p><strong>官网地址:</strong>
+<a class=link href="https://kyome.io/runcat/?lang=en" target=_blank rel=noopener>https://kyome.io/runcat/?lang=en</a></p><p><strong>安装方式:</strong>
+App Store 直接安装</p><p><strong>核心功能:</strong>
+小猫可爱捏。会在状态栏显示一只奔跑的小猫，系统负载越大，跑得越快。也可以点开看一些系统资源的具体使用信息</p><h3 id=inputsourcepro>InputSourcePro</h3><p><strong>官网地址:</strong>
+<a class=link href=https://inputsource.pro/ target=_blank rel=noopener>https://inputsource.pro/</a></p><p><strong>安装方式:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install --cask input-source-pro
+</span></span></code></pre></td></tr></table></div></div><p><strong>核心功能:</strong>
+为不同的程序设置不同的默认打开输入法</p><h2 id=文件目录定义>文件目录定义</h2><p>使用 kebab-case 风格进行命名。</p><ul><li>/Document<ul><li>/lcsk42.github.io</li><li>/container</li><li>/code<ul><li>/com.lcsk42</li><li>/com.skybeyondtech</li></ul></li><li>/script<ul><li>/jebra</li><li>/navicat-premium-reset-trial</li></ul></li></ul></li></ul><h2 id=开发相关>开发相关</h2><h3 id=back-end>Back-end</h3><h4 id=java>Java</h4><p>安装 jdk</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>brew install jenv openjdk@21 openjdk@17 mvn
+</span></span></code></pre></td></tr></table></div></div><ul><li>jenv: java 版本管理</li><li>jdk：开发必备</li><li>mvn: 包管理</li></ul><h3 id=front-end>Front-end</h3><ul><li>IntelliJ IDEA: 吃饭的软件</li><li>Navicat: 数据库连接软件</li><li>Wireshark: 网络抓包</li></ul><h2 id=沟通娱乐>沟通娱乐</h2><ul><li>WeChat： 国内必备</li><li>Telegram：拓宽视野</li><li>IINA：Mac 下最好的本地视频播放器</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/mac/>Mac</a>
+<a href=/tags/software/>Software</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/software-list/><div class=article-details><h2 class=article-title>软件列表</h2></div></a></article><article><a href=/post/deployment-configs/><div class=article-details><h2 class=article-title>服务器服务管理</h2></div></a></article><article><a href=/post/docker-depend-and-health/><div class=article-details><h2 class=article-title>Docker Compose 服务依赖和健康检查</h2></div></a></article><article><a href=/post/arthas/><div class=article-details><h2 class=article-title>Arthas</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Lucas's Article</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.30.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
